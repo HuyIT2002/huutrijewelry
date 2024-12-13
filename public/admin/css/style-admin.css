@@ -30,6 +30,97 @@ body {
     /* Khoảng cách giữa Edit và Delete */
 }
 
+.table-responsive {
+    width: 100%;
+    /* Đảm bảo bảng chiếm toàn bộ chiều rộng của phần tử chứa */
+    overflow-x: auto;
+    /* Thêm thanh cuộn ngang khi bảng quá rộng */
+    -webkit-overflow-scrolling: touch;
+    /* Thêm hỗ trợ cuộn mượt mà trên thiết bị di động */
+}
+
+.panel-footer-2 {
+    display: flex;
+    justify-content: center;
+    /* Căn giữa theo chiều ngang */
+    align-items: center;
+    /* Căn giữa theo chiều dọc nếu cần */
+    padding: 15px;
+}
+
+.row-2 {
+    display: flex;
+    justify-content: center;
+    /* Căn giữa phần tử row */
+    width: 100%;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+/* Các thuộc tính cho nút phân trang */
+.pagination .page-item .page-link {
+    border-radius: 50%;
+    /* Tạo hình tròn */
+    padding: 10px 15px;
+    /* Điều chỉnh kích thước hình tròn */
+    font-size: 16px;
+    /* Điều chỉnh kích thước chữ */
+    margin: 0 5px;
+    /* Tạo khoảng cách giữa các nút */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Căn giữa nội dung trong nút */
+}
+
+/* Màu nền và màu chữ cho trang hiện tại */
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Màu nền và màu chữ khi hover */
+.pagination .page-item .page-link:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+/* Màu nền và màu chữ khi nút bị disabled */
+.pagination .page-item.disabled .page-link {
+    background-color: #f0f0f0;
+    color: #ccc;
+}
+
+/* Media Query cho thiết bị nhỏ hơn (ví dụ: di động) */
+@media (max-width: 768px) {
+    .pagination .page-item .page-link {
+        padding: 8px 12px;
+        /* Điều chỉnh padding cho màn hình nhỏ */
+        font-size: 14px;
+        /* Giảm kích thước chữ */
+        margin: 0 3px;
+        /* Giảm khoảng cách giữa các nút */
+    }
+}
+
+/* Media Query cho thiết bị rất nhỏ (ví dụ: điện thoại) */
+@media (max-width: 480px) {
+    .pagination .page-item .page-link {
+        padding: 6px 10px;
+        /* Điều chỉnh padding cho màn hình nhỏ hơn */
+        font-size: 12px;
+        /* Giảm kích thước chữ */
+        margin: 0 2px;
+        /* Giảm khoảng cách giữa các nút */
+    }
+}
+
 .alert-success {
     background-color: #28a745;
     /* Màu xanh */

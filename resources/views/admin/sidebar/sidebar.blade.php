@@ -11,7 +11,7 @@
 
             <li class="sub-menu">
                 <a href="javascript:;">
-                    <i class="fa fa-book"></i>
+                    <i class="fa-solid fa-coins"></i>
                     <span>Giá Vàng</span>
                 </a>
                 <ul class="sub">
@@ -21,33 +21,26 @@
                 </ul>
 
             </li>
-            <li>
-                <a href="fontawesome.html">
-                    <i class="fa fa-bullhorn"></i>
-                    <span>Font awesome </span>
-                </a>
-            </li>
             <li class="sub-menu">
                 <a href="javascript:;">
-                    <i class="fa fa-th"></i>
-                    <span>Data Tables</span>
+                    <i class="fa fa-gem"></i>
+                    <span>Sản phẩm vàng</span>
                 </a>
                 <ul class="sub">
-                    <li><a href="basic_table.html">Basic Table</a></li>
-                    <li><a href="responsive_table.html">Responsive Table</a></li>
+                    <li><a href="{{ route('admin.products.index') }}">Bảng điều khiển sản phẩm</a></li>
                 </ul>
             </li>
             <li class="sub-menu">
                 <a href="javascript:;">
-                    <i class="fa fa-tasks"></i>
-                    <span>Form Components</span>
+                    <i class="fa fa-list-alt"></i> <!-- Icon cho danh mục -->
+                    <span>Danh mục sản phẩm</span>
                 </a>
                 <ul class="sub">
-                    <li><a href="form_component.html">Form Elements</a></li>
-                    <li><a href="form_validation.html">Form Validation</a></li>
-                    <li><a href="dropzone.html">Dropzone</a></li>
+                    <li><a href="{{ route('admin.categories.index') }}">Danh sách danh mục con</a></li> <!-- Router danh sách -->
+                    <li><a href="{{ route('admin.parent-categories.index') }}">Danh sách danh mục cha</a></li>
                 </ul>
             </li>
+
             <li class="sub-menu">
                 <a href="javascript:;">
                     <i class="fa fa-envelope"></i>
