@@ -30,6 +30,15 @@ body {
     /* Khoảng cách giữa Edit và Delete */
 }
 
+#contentEditor {
+    height: 300px;
+    /* Tăng chiều cao */
+    width: 100%;
+    /* Đảm bảo textarea chiếm toàn bộ chiều rộng của ô chứa */
+    resize: vertical;
+    /* Cho phép người dùng thay đổi chiều cao */
+}
+
 .table-responsive {
     width: 100%;
     /* Đảm bảo bảng chiếm toàn bộ chiều rộng của phần tử chứa */

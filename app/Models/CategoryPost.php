@@ -14,9 +14,11 @@ class CategoryPost extends Model
     // Xác định khóa chính (nếu không phải là id mặc định)
     protected $primaryKey = 'category_posts_id';
 
+
     // Cho phép mass assignment với các trường
     protected $fillable = [
         'name',
+        'slug',
         'description',
         'status',
         'created_at',
@@ -25,4 +27,9 @@ class CategoryPost extends Model
 
     // Tắt auto timestamps vì đã định nghĩa riêng created_at và updated_at
     public $timestamps = false;
+    // Mối quan hệ với Post
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'category_posts_id', 'category_posts_id');
+    }
 }

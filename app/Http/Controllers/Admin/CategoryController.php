@@ -24,7 +24,7 @@ class CategoryController extends Controller
     public function create()
     {
         // Lấy tất cả danh mục cha từ bảng parent_categories
-        $parentCategories = ParentCategory::all();
+        $categoryPost = ParentCategory::all();
 
         // Trả về view với dữ liệu đã lấy
         return view('admin.categories.create', compact('parentCategories'));

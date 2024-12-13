@@ -43,24 +43,32 @@
 
             <li class="sub-menu">
                 <a href="javascript:;">
-                    <i class="fa fa-envelope"></i>
-                    <span>Mail </span>
+                    <i class="fa fa-pencil"></i> <!-- Icon cho danh mục sản phẩm -->
+                    <span>Danh mục bài viết</span>
                 </a>
                 <ul class="sub">
-                    <li><a href="mail.html">Inbox</a></li>
-                    <li><a href="mail_compose.html">Compose Mail</a></li>
+                    <!-- Thêm đường dẫn Category Post -->
+                    <li><a href="{{ route('admin.category-posts.index') }}">
+                            <i class="fa"></i>
+                            Danh mục bài viết
+                        </a></li>
                 </ul>
             </li>
+
             <li class="sub-menu">
                 <a href="javascript:;">
-                    <i class=" fa fa-bar-chart-o"></i>
-                    <span>Charts</span>
+                    <i class="fa fa-newspaper-o"></i> <!-- Icon cho bài viết -->
+                    <span>Bài viết</span>
                 </a>
                 <ul class="sub">
-                    <li><a href="chartjs.html">Chart js</a></li>
-                    <li><a href="flot_chart.html">Flot Charts</a></li>
+                    <!-- Đường dẫn cho Bài viết -->
+                    <li><a href="{{ route('admin.posts.index') }}">
+                            <i class="fa"></i> <!-- Icon cho Bài viết -->
+                            Danh sách bài viết
+                        </a></li>
                 </ul>
             </li>
+
             <li class="sub-menu">
                 <a href="javascript:;">
                     <i class=" fa fa-bar-chart-o"></i>

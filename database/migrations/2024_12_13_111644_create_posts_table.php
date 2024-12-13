@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('category_posts', function (Blueprint $table) {
-            $table->increments('category_posts_id'); // Khóa chính tự tăng
-            $table->string('name')->unique(); // Tên danh mục
-            $table->string('slug')->unique(); // Đường dẫn thân thiện
-            $table->text('description')->nullable(); // Mô tả (tùy c
+        Schema::create('posts', function (Blueprint $table) {
+            $table->increments('posts_id'); // Khóa chính tự tăng
+            $table->string('title'); // Tạo cột title
+            $table->text('content'); // Tạo cột content
+            $table->string('slug')->unique(); // Tạo cột slug và đảm bảo nó là duy n
             $table->boolean('status')->default(true); // Trạng thái (Hiển thị hoặc Ẩn)
             $table->dateTime('created_at')->nullable(); // Cột created_at riêng
             $table->dateTime('updated_at')->nullable(); // Cột updated_at riêng
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_posts');
+        Schema::dropIfExists('posts');
     }
 };

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ParentCategoryController;
 use App\Http\Controllers\Admin\CategoryPostController;
+use App\Http\Controllers\Admin\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -121,4 +122,19 @@ Route::prefix('category-posts')
         Route::post('/update/{category_post_id}', [CategoryPostController::class, 'update'])->name('update'); // Xử lý sửa CategoryPost
         Route::delete('/delete/{category_post_id}', [CategoryPostController::class, 'destroy'])->name('destroy'); // Xóa CategoryPost
         Route::get('/update-status/{category_post_id}', [CategoryPostController::class, 'updateStatus'])->name('update-status'); // Cập nhật trạng thái CategoryPost
+    });
+
+
+Route::prefix('posts')
+    ->name('admin.posts.')
+    ->middleware(['check.role:1,2']) // Middleware kiểm tra quyền
+    ->group(function () {
+        // Trang danh sách bài viết
+        Route::get('/', [PostController::class, 'index'])->name('index');
+        Route::get('/create', [PostController::class, 'create'])->name('create');
+        Route::post('/', [PostController::class, 'store'])->name('store');
+        Route::get('/edit/{post_id}', [PostController::class, 'edit'])->name('edit');
+        Route::post('/update/{post_id}', [PostController::class, 'update'])->name('update');
+        Route::delete('/delete/{post_id}', [PostController::class, 'destroy'])->name('destroy');
+        Route::get('/update-status/{post_id}', [PostController::class, 'updateStatus'])->name('update-status');
     });
