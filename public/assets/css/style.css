@@ -1393,9 +1393,9 @@ only screen and (max-width: 767.98px) {
     position: relative;
 }
 
-.main-menu ul li a {
+/* .main-menu ul li a {
     color: #222222;
-    font-size: 15px;
+    font-size: 20px;
     padding: 37px 15px;
     font-weight: 400;
     display: block;
@@ -1405,16 +1405,79 @@ only screen and (max-width: 767.98px) {
 .main-menu ul li a i {
     font-size: 14px;
     padding: 0 3px;
-}
+} */
 
 .main-menu ul li:first-child a {
     padding-left: 0;
 }
 
-.main-menu ul li:hover>a,
+/* .main-menu ul li:hover>a,
 .main-menu ul li.active>a {
     color: #c29958;
+} */
+.main-menu ul li a {
+    color: #228B22;
+    /* Màu xanh lá cây đậm */
+    font-size: 22px;
+    /* Kích thước chữ vừa phải */
+    padding: 40px 20px;
+    /* Điều chỉnh khoảng cách */
+    font-weight: 600;
+    /* Đậm hơn để nổi bật */
+    display: block;
+    text-transform: capitalize;
+    font-family: 'Great Vibes', cursive;
+    /* Font chữ phong cách Noel */
+    letter-spacing: 1.5px;
+    /* Khoảng cách giữa các chữ */
+    text-shadow: 2px 2px 10px rgba(255, 215, 0, 0.6);
+    /* Bóng sáng màu vàng ánh kim */
+    transition: color 0.3s ease, transform 0.3s ease;
+    /* Hiệu ứng mượt khi hover */
 }
+
+/* Hiệu ứng hover */
+.main-menu ul li:hover>a,
+.main-menu ul li.active>a {
+    color: #FFD700;
+    /* Màu vàng ánh kim nổi bật */
+    transform: scale(1.1);
+    /* Phóng to nhẹ khi hover */
+    text-shadow: 3px 3px 15px rgba(255, 0, 0, 0.6);
+    /* Bóng sáng đỏ */
+    background: linear-gradient(90deg, #FF4500, #FFD700);
+    /* Hiệu ứng gradient đỏ-vàng */
+    -webkit-background-clip: text;
+    /* Áp dụng gradient vào chữ */
+    -webkit-text-fill-color: transparent;
+    /* Làm chữ trong suốt */
+}
+
+/* Biểu tượng đặc trưng Noel thêm vào sau chữ */
+.main-menu ul li:hover>a::after {
+    content: " ✨";
+    /* Biểu tượng ánh sáng hoặc thay bằng ❄ nếu muốn */
+    font-size: 18px;
+    /* Kích thước biểu tượng */
+    color: #FF0000;
+    /* Màu đỏ nổi bật */
+    margin-left: 5px;
+    /* Khoảng cách với chữ */
+    animation: glow 1.5s infinite alternate;
+    /* Hiệu ứng phát sáng */
+}
+
+/* Hiệu ứng phát sáng cho biểu tượng */
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.8), 0 0 10px rgba(255, 69, 0, 0.6);
+    }
+
+    to {
+        text-shadow: 0 0 15px rgba(255, 215, 0, 1), 0 0 25px rgba(255, 69, 0, 1);
+    }
+}
+
 
 .main-menu ul li ul.dropdown {
     top: calc(100% - 1px);
@@ -1892,7 +1955,7 @@ only screen and (max-width: 767.98px) {
     }
 }
 
-.mobile-menu li>a {
+/* .mobile-menu li>a {
     font-size: 15px;
     color: #222222;
     text-transform: capitalize;
@@ -1908,7 +1971,72 @@ only screen and (max-width: 767.98px) {
 
 .mobile-menu li ul li {
     border: none;
+} */
+/* Phong cách cơ bản cho menu mobile */
+.mobile-menu li>a {
+    font-size: 16px;
+    /* Tăng kích thước chữ một chút */
+    color: #800020;
+    /* Màu xanh teal (hoặc đổi thành #228B22 nếu muốn xanh ngọc bích) */
+    text-transform: capitalize;
+    line-height: 20px;
+    position: relative;
+    display: inline-block;
+    padding: 12px 0;
+    font-family: 'Great Vibes', cursive;
+    /* Font chữ Noel */
+    letter-spacing: 1px;
+    /* Tăng khoảng cách chữ */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    /* Tạo bóng nhẹ */
+    transition: color 0.3s ease, transform 0.3s ease;
 }
+
+/* Hiệu ứng hover cho menu mobile */
+.mobile-menu li>a:hover {
+    color: #FFD700;
+    /* Vàng ánh kim khi hover */
+    text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.5);
+    /* Bóng đỏ Noel */
+    transform: scale(1.1);
+    /* Tăng nhẹ kích thước chữ */
+}
+
+/* Phong cách cho menu con */
+.mobile-menu li ul li {
+    border: none;
+    background-color: #f5f5f5;
+    /* Màu nền nhạt hơn cho menu con */
+    padding: 8px 0;
+    margin: 5px 0;
+}
+
+.mobile-menu li ul li a {
+    font-size: 14px;
+    color: #228B22;
+    /* Màu xanh ngọc bích */
+    padding: 5px 10px;
+    text-shadow: none;
+}
+
+.mobile-menu li ul li a:hover {
+    color: #FF4500;
+    /* Màu cam đỏ sáng hơn khi hover */
+    background-color: #FFD700;
+    /* Nền vàng ánh kim */
+    border-radius: 5px;
+    /* Bo góc nhẹ */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    /* Bóng cho chữ */
+}
+
+/* Thêm hiệu ứng mượt cho chuyển đổi */
+.mobile-menu li>a,
+.mobile-menu li ul li a {
+    transition: all 0.3s ease;
+}
+
+
 
 .mobile-menu li ul li a {
     font-size: 14px;
@@ -4865,13 +4993,147 @@ only screen and (max-width: 767.98px) {
     }
 }
 
+/* Style chung cho text */
+.branch-name {
+    font-size: 24px;
+    /* Kích thước chữ lớn hơn */
+    font-weight: bold;
+    /* Chữ đậm */
+    color: #ffffff;
+    /* Màu trắng */
+    text-decoration: none;
+    /* Loại bỏ gạch chân */
+    display: inline-block;
+
+    /* Hiệu ứng gradient Noel */
+    background: linear-gradient(to right, #ff0000, #00ff00, #ff0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Hiệu ứng bóng chữ Noel */
+    text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.8),
+        0px 0px 12px rgba(255, 0, 0, 0.6),
+        0px 0px 12px rgba(0, 255, 0, 0.6);
+
+    /* Animation lung linh */
+    animation: sparkle-effect 2s infinite alternate;
+}
+
+/* Hiệu ứng hover */
+.branch-name:hover {
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 1),
+        0px 0px 15px rgba(255, 0, 0, 0.8),
+        0px 0px 15px rgba(0, 255, 0, 0.8);
+    transform: scale(1.05);
+    /* Phóng to khi rê chuột */
+}
+
+/* Animation lung linh */
+@keyframes sparkle-effect {
+    0% {
+        text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.8),
+            0px 0px 12px rgba(255, 0, 0, 0.6),
+            0px 0px 12px rgba(0, 255, 0, 0.6);
+    }
+
+    50% {
+        text-shadow: 0px 0px 12px rgba(255, 255, 255, 1),
+            0px 0px 15px rgba(255, 0, 0, 0.8),
+            0px 0px 15px rgba(0, 255, 0, 0.8);
+    }
+
+    100% {
+        text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.8),
+            0px 0px 12px rgba(255, 0, 0, 0.6),
+            0px 0px 12px rgba(0, 255, 0, 0.6);
+    }
+}
+
+
+.branch-details {
+    font-weight: bold;
+    color: #333333;
+    font-size: 16px;
+    line-height: 1.5;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    /* Hiệu ứng bóng chữ */
+}
+
+/* Style chung cho các phần */
+.branch-email a,
+.branch-phone a {
+    font-weight: bold;
+    background: linear-gradient(to right, #ff0000, #0073e6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+/* Hiệu ứng khi rê chuột qua */
+.branch-email a:hover,
+.branch-phone a:hover {
+    color: #0073e6;
+    /* Thay đổi màu khi hover */
+    text-decoration: underline;
+    /* Gạch chân khi hover */
+}
+
+/* Style cho icon nếu cần */
+.branch-icon {
+    color: #0073e6;
+    /* Màu biểu tượng */
+    margin-right: 8px;
+    /* Khoảng cách giữa icon và text */
+}
+
+
 .about-title {
     font-size: 48px;
-    color: #d1d1d1;
+    color: #393838;
+    /* Giữ màu cơ bản */
     display: block;
     line-height: 1.1;
+    padding: 10px;
     margin-bottom: 38px;
+
+    /* Hiệu ứng gradient */
+    background: linear-gradient(to right, #ff0000, #00ff00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Hiệu ứng ánh sáng */
+    text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.8),
+        0px 0px 16px rgba(255, 0, 0, 0.6),
+        0px 0px 16px rgba(0, 255, 0, 0.6);
+
+    /* Phông chữ lễ hội */
+    font-family: 'Pacifico', cursive;
+
+    /* Thêm hoạt hình lung linh */
+    animation: sparkle 2s infinite alternate;
 }
+
+/* Hoạt ảnh ánh sáng lung linh */
+@keyframes sparkle {
+    0% {
+        text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.8),
+            0px 0px 16px rgba(255, 0, 0, 0.6),
+            0px 0px 16px rgba(0, 255, 0, 0.6);
+    }
+
+    50% {
+        text-shadow: 0px 0px 12px rgba(255, 255, 255, 1),
+            0px 0px 20px rgba(255, 0, 0, 0.8),
+            0px 0px 20px rgba(0, 255, 0, 0.8);
+    }
+
+    100% {
+        text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.8),
+            0px 0px 16px rgba(255, 0, 0, 0.6),
+            0px 0px 16px rgba(0, 255, 0, 0.6);
+    }
+}
+
 
 @media only screen and (max-width: 767.98px) {
     .about-title {

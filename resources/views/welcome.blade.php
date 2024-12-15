@@ -1,22 +1,24 @@
 <!doctype html>
 <html class="no-js" lang="en">
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Huu Tri Jewelry | Trang chủ</title>
-    <meta name="robots" content="noindex, follow" />
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/public/assets/img/logo/logo_a.ico')}}">
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Huu Tri Jewelry | Trang chủ</title>
+<meta name="robots" content="noindex, follow" />
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="shortcut icon" type="image/x-icon" href="{{ asset('/public/assets/img/logo/logo_a.ico')}}">
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,900" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('/public/assets/css/vendor/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{ asset('/public/assets/css/vendor/pe-icon-7-stroke.css')}}">
-    <link rel="stylesheet" href="{{ asset('/public/assets/css/vendor/font-awesome.min.css')}}">
-    <link rel="stylesheet" href="{{ asset('/public/assets/css/plugins/slick.min.css')}}">
-    <link rel="stylesheet" href="{{ asset('/public/assets/css/plugins/animate.css')}}">
-    <link rel="stylesheet" href="{{ asset('/public/assets/css/plugins/nice-select.css')}}">
-    <link rel="stylesheet" href="{{ asset('/public/assets/css/plugins/jqueryui.min.css')}}">
-    <link rel="stylesheet" href="{{ asset('/public/assets/css/style.css')}}">
+<link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,900" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ asset('/public/assets/css/vendor/bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{ asset('/public/assets/css/vendor/pe-icon-7-stroke.css')}}">
+<link rel="stylesheet" href="{{ asset('/public/assets/css/vendor/font-awesome.min.css')}}">
+<link rel="stylesheet" href="{{ asset('/public/assets/css/plugins/slick.min.css')}}">
+<link rel="stylesheet" href="{{ asset('/public/assets/css/plugins/animate.css')}}">
+<link rel="stylesheet" href="{{ asset('/public/assets/css/plugins/nice-select.css')}}">
+<link rel="stylesheet" href="{{ asset('/public/assets/css/plugins/jqueryui.min.css')}}">
+<link rel="stylesheet" href="{{ asset('/public/assets/css/style.css')}}">
 
 </head>
 
@@ -47,4 +49,5 @@
     <script src="{{ asset('/public/assets/js/plugins/ajax-mail.js')}}"></script>
     <script src="{{ asset('/public/assets/js/main.js')}}"></script>
 </body>
+
 </html>

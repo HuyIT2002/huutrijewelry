@@ -21,7 +21,7 @@
         </div>
         @endif
 
-        <form class="form-horizontal bucket-form" method="POST" action="{{ route('admin.posts.store') }}">
+        <form class="form-horizontal bucket-form" method="POST" action="{{ route('admin.posts.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label class="col-sm-3 control-label">Tiêu đề bài viết</label>
@@ -94,6 +94,28 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Ảnh bài viết</label>
+                <div class="col-sm-6">
+                    <input type="file" name="images" class="form-control" accept="image/*" onchange="previewImage(event)">
+                    @error('images')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                    <br>
+                    <img id="imagePreview" src="#" alt="Ảnh bài viết" style="max-width: 200px; display: none;" />
+                </div>
+            </div>
+            <script>
+                function previewImage(event) {
+                    var reader = new FileReader();
+                    reader.onload = function() {
+                        var output = document.getElementById('imagePreview');
+                        output.src = reader.result;
+                        output.style.display = 'block';
+                    }
+                    reader.readAsDataURL(event.target.files[0]);
+                }
+            </script>
 
             <div class="form-group">
                 <div class="col-lg-offset-3 col-lg-6">
@@ -104,20 +126,28 @@
         </form>
 
         <script>
-            // Hàm tự động tạo slug từ tiêu đề
             document.getElementById('postTitle').addEventListener('input', function() {
-                var title = this.value;
-                document.getElementById('postSlug').value = convertToSlug(title);
+                var name = this.value;
+
+                // Hàm chuyển đổi các ký tự có dấu thành không dấu
+                var slug = convertToSlug(name);
+
+                // Gán giá trị vào ô input slug
+                document.getElementById('postSlug').value = slug;
             });
 
+            // Hàm chuyển đổi tên thành slug
+            // Hàm chuyển đổi tên thành slug
             function convertToSlug(text) {
                 return text
-                    .toLowerCase()
-                    .normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "")
-                    .replace(/[^a-z0-9\s-]/g, '')
-                    .replace(/\s+/g, '-')
-                    .replace(/-+/g, '-');
+                    .toLowerCase() // Chuyển thành chữ thường
+                    .replace(/đ/g, 'd') // Thay thế ký tự "đ" thành "d"
+                    .replace(/Đ/g, 'd') // Thay thế ký tự "Đ" thành "d"
+                    .normalize("NFD") // Phân tách ký tự có dấu thành 2 phần (chữ + dấu)
+                    .replace(/[\u0300-\u036f]/g, "") // Loại bỏ các dấu (dấu tiếng Việt)
+                    .replace(/[^a-z0-9\s-]/g, '') // Loại bỏ các ký tự không phải chữ cái, số, khoảng trắng hoặc dấu gạch ngang
+                    .replace(/\s+/g, '-') // Thay khoảng trắng bằng dấu gạch ngang
+                    .replace(/-+/g, '-'); // Xóa các dấu gạch ngang dư thừa
             }
         </script>
 

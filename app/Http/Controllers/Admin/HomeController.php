@@ -8,6 +8,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return view('admin.content.main');
+        $pageTitle = 'Trang Chủ'; // Tiêu đề động của trang
+        return view('admin.content.main', compact('pageTitle'));
     }
 }

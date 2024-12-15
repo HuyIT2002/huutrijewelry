@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('posts_id'); // Khóa chính tự tăng
             $table->string('title'); // Tạo cột title
+            $table->string('images'); // Tạo cột title
             $table->text('content'); // Tạo cột content
             $table->string('slug')->unique(); // Tạo cột slug và đảm bảo nó là duy n
             $table->boolean('status')->default(true); // Trạng thái (Hiển thị hoặc Ẩn)

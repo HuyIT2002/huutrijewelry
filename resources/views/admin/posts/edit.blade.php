@@ -21,7 +21,7 @@
         </div>
         @endif
 
-        <form class="form-horizontal bucket-form" method="POST" action="{{ route('admin.posts.update', $post->posts_id) }}">
+        <form class="form-horizontal bucket-form" method="POST" action="{{ route('admin.posts.update', $post->posts_id) }}" enctype="multipart/form-data">
             @csrf
             @method('POST') <!-- Phương thức PUT để cập nhật bài viết -->
 
@@ -92,6 +92,23 @@
                     @enderror
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Ảnh bài viết</label>
+                <div class="col-sm-6">
+                    <!-- Hiển thị ảnh hiện tại -->
+                    <img src="{{ asset('public/admin/images/post/' . $post->images) }}" alt="Current Image" id="currentImage" style="max-width: 100%; height: auto;">
+                    <br><br>
+
+                    <!-- Trường input tải ảnh lên -->
+                    <input type="file" name="image" class="form-control" id="postImage" onchange="previewImage(event)">
+                    @error('image')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
+
+                    <!-- Vùng để hiển thị ảnh tải lên trước khi submit -->
+                    <img id="preview" style="max-width: 100%; height: auto; margin-top: 10px;" alt="Image Preview">
+                </div>
+            </div>
 
             <div class="form-group">
                 <div class="col-lg-offset-3 col-lg-6">
@@ -116,6 +133,15 @@
                     .replace(/[^a-z0-9\s-]/g, '')
                     .replace(/\s+/g, '-')
                     .replace(/-+/g, '-');
+            }
+
+            function previewImage(event) {
+                var reader = new FileReader();
+                reader.onload = function() {
+                    var output = document.getElementById('preview');
+                    output.src = reader.result;
+                };
+                reader.readAsDataURL(event.target.files[0]);
             }
         </script>
 

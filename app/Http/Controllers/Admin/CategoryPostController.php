@@ -14,12 +14,14 @@ class CategoryPostController extends Controller
     public function index()
     {
         $categories = CategoryPost::all(); // Lấy danh mục kèm theo danh mục cha nếu có
-        return view('admin.category-posts.danh-muc-bai-viet', compact('categories'));
+        $pageTitle = 'Danh mục bài viết';
+        return view('admin.category-posts.danh-muc-bai-viet', compact('categories', 'pageTitle'));
     }
     // Hiển thị form tạo mới
     public function create()
     {
-        return view('admin.category-posts.create'); // Chỉ ra view tạo mới
+        $pageTitle = 'Tạo mới danh mục bài viết';
+        return view('admin.category-posts.create', compact('pageTitle')); // Chỉ ra view tạo mới
     }
 
     // Lưu danh mục mới
@@ -64,8 +66,9 @@ class CategoryPostController extends Controller
     public function edit($category_post_id)
     {
         // Lấy dữ liệu để sửa category post
+        $pageTitle = 'Chỉnh sửa danh mục bài viết';
         $category = CategoryPost::findOrFail($category_post_id);
-        return view('admin.category-posts.edit', compact('category'));
+        return view('admin.category-posts.edit', compact('category', 'pageTitle'));
     }
     public function update(Request $request, $category_post_id)
     {

@@ -13,11 +13,13 @@ class GoldPriceController extends Controller
     public function index()
     {
         $goldPrices = GoldPrice::all();
-        return view('admin.goldPrice.gold_price', compact('goldPrices'));
+        $pageTitle = 'Giá vàng';
+        return view('admin.goldPrice.gold_price', compact('goldPrices', 'pageTitle'));
     }
     public function create()
     {
-        return view('admin.goldPrice.create'); // trả về view thêm mới
+        $pageTitle = 'Tạo mới giá vàng';
+        return view('admin.goldPrice.create', compact('pageTitle')); // trả về view thêm mới
     }
     public function store(Request $request)
     {
@@ -45,8 +47,9 @@ class GoldPriceController extends Controller
     }
     public function edit($gold_prices_id)
     {
+        $pageTitle = 'Chỉnh sửa giá vàng';
         $goldPrice = GoldPrice::findOrFail($gold_prices_id); // Tìm bản ghi hoặc báo lỗi 404
-        return view('admin.goldPrice.edit', compact('goldPrice'));
+        return view('admin.goldPrice.edit', compact('goldPrice', 'pageTitle'));
     }
     public function update(Request $request, $gold_prices_id)
     {

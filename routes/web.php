@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ParentCategoryController;
 use App\Http\Controllers\Admin\CategoryPostController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\GoldPriceControllerUsers;
+use App\Http\Controllers\BlogController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -137,4 +139,21 @@ Route::prefix('posts')
         Route::post('/update/{post_id}', [PostController::class, 'update'])->name('update');
         Route::delete('/delete/{post_id}', [PostController::class, 'destroy'])->name('destroy');
         Route::get('/update-status/{post_id}', [PostController::class, 'updateStatus'])->name('update-status');
+        Route::get('/posts/{posts_id}', [PostController::class, 'show'])->name('admin.posts.show');
+    });
+
+
+
+// user
+
+Route::prefix('gold-prices')
+    ->name('user.gold-prices.')
+    ->group(function () {
+        Route::get('/gia-vang-hom-nay', [GoldPriceControllerUsers::class, 'index'])->name('index');
+    });
+Route::prefix('blog')
+    ->name('user.blog.')
+    ->group(function () {
+        Route::get('/blog-list', [BlogController::class, 'index'])->name('list');
+        Route::get('/blog-details/{slug}', [BlogController::class, 'show'])->name('details');
     });

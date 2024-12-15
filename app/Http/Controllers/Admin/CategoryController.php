@@ -15,9 +15,9 @@ class CategoryController extends Controller
     {
         // Lấy 10 danh mục mỗi trang
         $categories = Category::paginate(9);
-
+        $pageTitle = 'Danh mục con';
         // Truyền biến $categories vào view
-        return view('admin.categories.danh-muc-san-pham', compact('categories'));
+        return view('admin.categories.danh-muc-san-pham', compact('categories', 'pageTitle'));
     }
 
     // Hiển thị form tạo mới danh mục
@@ -25,9 +25,10 @@ class CategoryController extends Controller
     {
         // Lấy tất cả danh mục cha từ bảng parent_categories
         $categoryPost = ParentCategory::all();
-
+        $parentCategories = ParentCategory::all();
+        $pageTitle = 'Tạo mới danh mục con';
         // Trả về view với dữ liệu đã lấy
-        return view('admin.categories.create', compact('parentCategories'));
+        return view('admin.categories.create', compact('pageTitle', 'parentCategories'));
     }
 
     // Lưu danh mục mới vào cơ sở dữ liệu
@@ -96,12 +97,12 @@ class CategoryController extends Controller
     {
         // Tìm danh mục theo ID
         $category = Category::findOrFail($category_id);
-
+        $pageTitle = 'Chỉnh sửa danh mục con';
         // Lấy tất cả các danh mục cha
         $parentCategories = ParentCategory::all();
 
         // Trả về trang sửa danh mục cùng với thông tin danh mục và danh mục cha
-        return view('admin.categories.edit', compact('category', 'parentCategories'));
+        return view('admin.categories.edit', compact('category', 'parentCategories', 'pageTitle'));
     }
     public function update(Request $request, $category_id)
     {

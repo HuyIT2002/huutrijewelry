@@ -101,9 +101,12 @@
             });
 
             // Hàm chuyển đổi tên thành slug
+            // Hàm chuyển đổi tên thành slug
             function convertToSlug(text) {
                 return text
                     .toLowerCase() // Chuyển thành chữ thường
+                    .replace(/đ/g, 'd') // Thay thế ký tự "đ" thành "d"
+                    .replace(/Đ/g, 'd') // Thay thế ký tự "Đ" thành "d"
                     .normalize("NFD") // Phân tách ký tự có dấu thành 2 phần (chữ + dấu)
                     .replace(/[\u0300-\u036f]/g, "") // Loại bỏ các dấu (dấu tiếng Việt)
                     .replace(/[^a-z0-9\s-]/g, '') // Loại bỏ các ký tự không phải chữ cái, số, khoảng trắng hoặc dấu gạch ngang

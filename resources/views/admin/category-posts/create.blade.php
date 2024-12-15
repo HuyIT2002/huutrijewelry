@@ -78,14 +78,17 @@
                 document.getElementById('categorySlug').value = slug;
             });
 
+            // Hàm chuyển đổi tên thành slug
             function convertToSlug(text) {
                 return text
-                    .toLowerCase()
-                    .normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "")
-                    .replace(/[^a-z0-9\s-]/g, '')
-                    .replace(/\s+/g, '-')
-                    .replace(/-+/g, '-');
+                    .toLowerCase() // Chuyển thành chữ thường
+                    .replace(/đ/g, 'd') // Thay thế ký tự "đ" thành "d"
+                    .replace(/Đ/g, 'd') // Thay thế ký tự "Đ" thành "d"
+                    .normalize("NFD") // Phân tách ký tự có dấu thành 2 phần (chữ + dấu)
+                    .replace(/[\u0300-\u036f]/g, "") // Loại bỏ các dấu (dấu tiếng Việt)
+                    .replace(/[^a-z0-9\s-]/g, '') // Loại bỏ các ký tự không phải chữ cái, số, khoảng trắng hoặc dấu gạch ngang
+                    .replace(/\s+/g, '-') // Thay khoảng trắng bằng dấu gạch ngang
+                    .replace(/-+/g, '-'); // Xóa các dấu gạch ngang dư thừa
             }
         </script>
 

@@ -14,11 +14,13 @@ class ParentCategoryController extends Controller
     public function index()
     {
         $parentCategories = ParentCategory::all();
-        return view('admin.parent-categories.danh-muc-cha', compact('parentCategories'));
+        $pageTitle = 'Danh mục cha';
+        return view('admin.parent-categories.danh-muc-cha', compact('parentCategories', 'pageTitle'));
     }
     public function create()
     {
-        return view('admin.parent-categories.create');
+        $pageTitle = 'Tạo mới danh mục cha';
+        return view('admin.parent-categories.create', compact('pageTitle'));
     }
     public function store(Request $request)
     {
@@ -78,9 +80,10 @@ class ParentCategoryController extends Controller
     {
         // Lấy thông tin danh mục theo ID
         $category = ParentCategory::findOrFail($parent_categorie_id);
+        $pageTitle = 'Chỉnh sửa danh mục cha';
 
         // Trả về view 'edit' với dữ liệu của danh mục
-        return view('admin.parent-categories.edit', compact('category'));
+        return view('admin.parent-categories.edit', compact('category', 'pageTitle'));
     }
 
     public function update(Request $request, $parent_categorie_id)
