@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\CategoryPostController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\GoldPriceControllerUsers;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ShopController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -137,11 +138,29 @@ Route::prefix('posts')
         Route::post('/', [PostController::class, 'store'])->name('store');
         Route::get('/edit/{post_id}', [PostController::class, 'edit'])->name('edit');
         Route::post('/update/{post_id}', [PostController::class, 'update'])->name('update');
-        Route::delete('/delete/{post_id}', [PostController::class, 'destroy'])->name('destroy');
+        Route::post('/products/danh-sach-san-pham/{products_id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
         Route::get('/update-status/{post_id}', [PostController::class, 'updateStatus'])->name('update-status');
         Route::get('/posts/{posts_id}', [PostController::class, 'show'])->name('admin.posts.show');
     });
 
+Route::prefix('products')
+    ->name('admin.products.')
+    ->middleware(['check.role:1,2']) // Middleware kiểm tra quyền
+    ->group(function () {
+        // Trang danh sách sản phẩm
+        Route::get('/danh-sach-san-pham', [ProductController::class, 'index'])->name('index');
+        // Trang tạo mới sản phẩm
+        Route::get('/create', [ProductController::class, 'create'])->name('create');
+        Route::post('/', [ProductController::class, 'store'])->name('store');
+        // Trang chỉnh sửa sản phẩm
+        Route::get('/edit/{products_id}', [ProductController::class, 'edit'])->name('edit');
+        Route::post('/update/{products_id}', [ProductController::class, 'update'])->name('update');
+        // Xóa sản phẩm
+        Route::delete('/delete/{products_id}', [ProductController::class, 'destroy'])->name('destroy');
+        // Trang chi tiết sản phẩm
+        Route::get('/{products_id}', [ProductController::class, 'show'])->name('show');
+        Route::get('/update-status/{products_id}', [ProductController::class, 'updateStatus'])->name('update-status');
+    });
 
 
 // user
@@ -156,4 +175,13 @@ Route::prefix('blog')
     ->group(function () {
         Route::get('/blog-list', [BlogController::class, 'index'])->name('list');
         Route::get('/blog-details/{slug}', [BlogController::class, 'show'])->name('details');
+    });
+Route::prefix('shops')
+    ->name('user.shops.')
+    ->group(function () {
+        // Route cho trang danh sách sản phẩm
+        Route::get('/danh-sach-san-pham', [ShopController::class, 'index'])->name('list');
+
+        // Route cho trang chi tiết sản phẩm
+        Route::get('/chi-tiet-san-pham/{slug}', [ShopController::class, 'show'])->name('details');
     });

@@ -23,4 +23,8 @@ class ParentCategory extends Model
     {
         return $this->hasMany(Category::class, 'parent_categorie_id', 'parent_categorie_id');
     }
+    public function goldProducts()
+    {
+        return $this->hasMany(GoldProduct::class, 'category_id', 'category_id');
+    }
 }
