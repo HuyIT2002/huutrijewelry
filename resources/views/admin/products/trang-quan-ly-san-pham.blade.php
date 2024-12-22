@@ -53,7 +53,7 @@
                         </td>
                         <td>{{ $product->product_name }}</td>
                         <td>{{ $product->code_id }}</td>
-                        <td>{{ $product->price }}</td>
+                        <td>{{ is_numeric($product->price) ? number_format($product->price, 0, ',', '.') . ' VNĐ' : 'N/A' }}</td>
                         <td>{{ $product->so_luong }}</td>
                         <td>
                             <a href="{{ route('admin.products.update-status', $product->products_id) }}" class="btn btn-sm {{ $product->status == 1 ? 'btn-success' : 'btn-danger' }}">
@@ -95,6 +95,35 @@
                 </tbody>
             </table>
         </div>
+        <footer class="panel-footer-2">
+            <div class="row-2">
+                <div class="col-sm-7 text-right text-center-xs">
+                    <ul class="pagination pagination-sm m-t-none m-b-none">
+                        <!-- Nút Previous -->
+                        <li class="page-item {{ $products->onFirstPage() ? 'disabled' : '' }}">
+                            <a class="page-link" href="{{ $products->previousPageUrl() }}" aria-label="Previous">
+                                <i class="fa fa-chevron-left"></i>
+                            </a>
+                        </li>
+
+                        <!-- Hiển thị các số trang -->
+                        @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+                        <li class="page-item {{ $products->currentPage() == $page ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                        </li>
+                        @endforeach
+
+                        <!-- Nút Next -->
+                        <li class="page-item {{ $products->hasMorePages() ? '' : 'disabled' }}">
+                            <a class="page-link" href="{{ $products->nextPageUrl() }}" aria-label="Next">
+                                <i class="fa fa-chevron-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
     </div>
 </div>
 

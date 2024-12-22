@@ -15,8 +15,9 @@ class Size extends Model
 
     // Chỉ định các thuộc tính có thể được gán đại trà
     protected $fillable = [
-        'gold_product_id', // ID của sản phẩm vàng (liên kết với bảng gold_products)
+        'products_id', // ID của sản phẩm vàng (liên kết với bảng gold_products)
         'size', // Kích thước của sản phẩm
+        'status',
         'created_at',
         'updated_at',
     ];
@@ -24,6 +25,6 @@ class Size extends Model
     // Quan hệ với bảng gold_products (một size thuộc về một sản phẩm vàng)
     public function goldProduct()
     {
-        return $this->belongsTo(GoldProduct::class, 'gold_product_id', 'gold_products_id');
+        return $this->belongsTo(Product::class, 'products_id', 'products_id');
     }
 }

@@ -13,7 +13,7 @@ class Admin extends Model implements Authenticatable
     // Đảm bảo bạn đã khai báo các thuộc tính cần thiết trong model này
     protected $primaryKey = 'admin_id'; // Nếu bạn sử dụng khóa chính khác ngoài 'id'
 
-    protected $fillable = ['username', 'email', 'password', 'role_id', 'images', 'status', 'created_at', 'updated_at'];
+    protected $fillable = ['username', 'email', 'password', 'role_id', 'admin_image', 'status', 'created_at', 'updated_at'];
 
     /**
      * Get the unique identifier for the user.
@@ -61,5 +61,11 @@ class Admin extends Model implements Authenticatable
     public function getRememberTokenName()
     {
         return 'remember_token';
+    }
+    // Trong App\Models\Admin.php
+    // Admin Model
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'role_id');  // Chắc chắn quan hệ với trường roles_id
     }
 }

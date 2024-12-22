@@ -14,13 +14,17 @@ class ProductController extends Controller
 {
     public function index()
     {
-        // Lấy tất cả sản phẩm từ bảng gold_products
-        $products = Product::with('category')->get();
-        $category = Category::all();
+        // Lấy danh sách sản phẩm và phân trang
+        $products = Product::with('category')->paginate(9); // Hiển thị 9 sản phẩm trên một trang
+
+        // Lấy danh mục sản phẩm
+        $categories = Category::paginate(9); // Phân trang danh mục (nếu cần)
+
         // Truyền dữ liệu vào view
         $pageTitle = 'Danh sách sản phẩm';
-        return view('admin.products.trang-quan-ly-san-pham', compact('pageTitle', 'products', 'category'));
+        return view('admin.products.trang-quan-ly-san-pham', compact('pageTitle', 'products', 'categories'));
     }
+
     public function create()
     {
         // Lấy tất cả danh mục cha và các danh mục con của chúng

@@ -19,7 +19,7 @@
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                     <img src="{{ asset('/public/admin/images/admin/' . session('admin_image', 'default.png')) }}" class="avatar">
                     <span class="user-id" style="display:none;">{{ session('admin_id') }}</span>
-                    <span class="user-id" style="display:none;">{{ session('role_id') }}</span>
+                    <span class="role_id" style="display:none;">{{ session('role_id') }}</span>
                     <span class="username">{{ session('admin_name', 'Guest') }}</span> <!-- Hiển thị tên người dùng từ session -->
                     <b class="caret"></b>
                 </a>

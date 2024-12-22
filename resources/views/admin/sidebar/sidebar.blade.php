@@ -71,16 +71,35 @@
 
             <li class="sub-menu">
                 <a href="javascript:;">
-                    <i class="fa fa fa-cogs"></i> <!-- Icon cho bài viết -->
+                    <i class="fa fa-cogs"></i> <!-- Icon cho sản phẩm -->
                     <span>Sản phẩm</span>
                 </a>
                 <ul class="sub">
-                    <li><a href="{{ route('admin.products.index') }}">
+                    <li>
+                        <a href="{{ route('admin.products.index') }}">
                             <i class="fa fa-list"></i> Danh sách sản phẩm
-                        </a></li>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('admin.size.index') }}">
+                            <i class="fa fa-expand"></i> Danh sách size
+                        </a>
+                    </li>
                 </ul>
             </li>
-
+            <li class="sub-menu">
+                <a href="javascript:;">
+                    <i class="fa fa-users"></i> <!-- Icon cho tài khoản -->
+                    <span>Quản lý tài khoản</span>
+                </a>
+                <ul class="sub">
+                    <li>
+                        <a href="{{ route('admin.accounts.index') }}">
+                            <i class="fa fa-list"></i> Danh sách tài khoản
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

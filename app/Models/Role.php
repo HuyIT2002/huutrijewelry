@@ -7,12 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    // Tên bảng nếu khác tên mặc định (plural của tên model)
-    protected $table = 'roles';
-    protected $primaryKey = 'roles_id'; // Cột khóa chính
-    // Các trường có thể gán (mass assignable)
+    use HasFactory;
+
+    protected $table = 'roles'; // Tên bảng nếu khác tên mặc định (plural của tên model)
+    protected $primaryKey = 'role_id'; // Khóa chính của bảng `roles`
+
     protected $fillable = ['name', 'type', 'description', 'status', 'created_at', 'updated_at'];
 
-    // Nếu không sử dụng timestamps, bạn có thể tắt nó bằng cách:
-    // public $timestamps = false;
+    // Quan hệ với Admin
+    public function admins()
+    {
+        return $this->hasMany(Admin::class, 'role_id', 'role_id');  // Đảm bảo quan hệ với trường `roles_id`
+    }
 }

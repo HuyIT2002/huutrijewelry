@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\GoldPriceControllerUsers;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\Admin\SizeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -161,6 +162,35 @@ Route::prefix('products')
         Route::get('/{products_id}', [ProductController::class, 'show'])->name('show');
         Route::get('/update-status/{products_id}', [ProductController::class, 'updateStatus'])->name('update-status');
     });
+Route::prefix('sizes')
+    ->name('admin.size.')
+    ->middleware(['check.role:1,2']) // Middleware kiểm tra quyền
+    ->group(function () {
+        // Trang danh sách size
+        Route::get('/danh-sach-size', [SizeController::class, 'index'])->name('index');
+        // Trang tạo mới size
+        Route::get('/create', [SizeController::class, 'create'])->name('create');
+        Route::post('/store', [SizeController::class, 'store'])->name('store');
+        // Trang chỉnh sửa size
+        Route::get('/edit/{size_id}', [SizeController::class, 'edit'])->name('edit');
+        Route::post('/update/{size_id}', [SizeController::class, 'update'])->name('update');
+        // Xóa size
+        Route::delete('/delete/{size_id}', [SizeController::class, 'destroy'])->name('destroy');
+        Route::get('/update-status/{size_id}', [SizeController::class, 'updateStatus'])->name('update-status');
+    });
+Route::prefix('accounts')
+    ->name('admin.accounts.')
+    ->middleware(['role:1']) // Chỉ role_id = 1 được phép
+    ->group(function () {
+        Route::get('/danh-sach-tai-khoan', [AdminController::class, 'index'])->name('index');
+        Route::get('/create', [AdminController::class, 'create'])->name('create');
+        Route::post('/store', [AdminController::class, 'store'])->name('store');
+        Route::get('/edit/{admin_id}', [AdminController::class, 'edit'])->name('edit');
+        Route::post('/update/{admin_id}', [AdminController::class, 'update'])->name('update');
+        Route::delete('/delete/{admin_id}', [AdminController::class, 'destroy'])->name('destroy');
+        Route::get('/update-status/{admin_id}', [AdminController::class, 'updateStatus'])->name('update-status');
+    });
+
 
 
 // user
