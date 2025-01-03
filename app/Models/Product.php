@@ -25,8 +25,6 @@ class Product extends Model
         'price',
         'trong_luong',
         'ham_chat_lieu',
-        'created_at',
-        'updated_at',
         'loai_da_chinh',
         'kich_thuoc_da',
         'mau_da_chinh',
@@ -36,6 +34,8 @@ class Product extends Model
         'status',
         'description',
         'category_id',
+        'created_at',
+        'updated_at',
 
     ];
 
@@ -46,11 +46,11 @@ class Product extends Model
 
     public function sizes()
     {
-        return $this->hasMany(Size::class, 'gold_product_id', 'gold_products_id');
+        return $this->hasMany(Size::class, 'products_id');
     }
     // Model Product (App\Models\Product)
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id', 'category_id');
+        return $this->belongsTo(Category::class, 'category_id'); // Trỏ đúng vào cột khóa ngoại
     }
 }

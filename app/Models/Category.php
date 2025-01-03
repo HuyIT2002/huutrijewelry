@@ -33,4 +33,8 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_categorie_id');
     }
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id'); // Trỏ đúng vào cột khóa ngoại
+    }
 }

@@ -14,6 +14,10 @@ use App\Http\Controllers\GoldPriceControllerUsers;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\Admin\SizeController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\HomeUserController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,13 +29,9 @@ use App\Http\Controllers\Admin\SizeController;
 |
  */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-//home
-Route::get('/', function () {
-    return view('user.home.home');
-});
+Route::get('/', [HomeUserController::class, 'index'])->name('home');
+
+
 //about
 Route::get('/ve-chung-toi', [AboutController::class, 'index']);
 
@@ -214,4 +214,50 @@ Route::prefix('shops')
 
         // Route cho trang chi tiết sản phẩm
         Route::get('/chi-tiet-san-pham/{slug}', [ShopController::class, 'show'])->name('details');
+    });
+
+
+
+Route::prefix('dich-vu')
+    ->name('user.services.')
+    ->group(function () {
+        // Route cho trang danh sách dịch vụ
+        Route::get('/', [ServiceController::class, 'index'])->name('list');
+        Route::get('/chinh-sach-bao-hanh', [ServiceController::class, 'warrantyPolicy'])->name('warranty');
+        Route::get('/do-size-nhan', [ServiceController::class, 'doSizeNhan'])->name('do-size-nhan');
+        Route::get('/do-size-day-chuyen', [ServiceController::class, 'doSizeDayChuyen'])->name('do-size-day-chuyen');
+        Route::get('/do-size-lac-vong', [ServiceController::class, 'showDoSizeLacVong'])->name('do-size-lac-vong');
+    });
+// Nhóm route cho member
+Route::prefix('member')
+    ->name('user.member.')
+    ->group(function () {
+        // Route cho trang đăng ký
+        Route::get('/register', [MemberController::class, 'showRegisterForm'])->name('register.form');
+        Route::post('/register', [MemberController::class, 'register'])->name('register.submit');
+
+        // Route cho trang đăng nhập
+        Route::get('/login', [MemberController::class, 'showLoginForm'])->name('login.form');
+        Route::post('/login', [MemberController::class, 'login'])->name('login.submit');
+
+        // Route cho trang logout
+        Route::get('/logout', [MemberController::class, 'logout'])->name('logout');
+        // Route cho trang thông tin tài khoản
+        Route::get('/account-info', [MemberController::class, 'showAccountInfo'])->name('account.info');
+        Route::post('/edit-account', [MemberController::class, 'updateAccount'])->name('update.account');
+        Route::get('/edit-address', [MemberController::class, 'editAddressForm'])->name('edit.address');
+        Route::post('/edit-address', [MemberController::class, 'updateAddress'])->name('update.address');
+        Route::post('/update-password', [MemberController::class, 'updatePassword'])->name('update.password');
+    });
+Route::prefix('orders')
+    ->name('user.orders.')
+    ->group(function () {
+        // Route cho trang danh sách đơn hàng
+        Route::get('/', [OrderController::class, 'index'])->name('list');
+
+        // Route cho trang chi tiết đơn hàng
+
+        Route::post('add-to-cart', [OrderController::class, 'addToCart'])->name('add-to-cart');
+        Route::post('create', [OrderController::class, 'create'])->name('create');
+        Route::get('remove/{productId}', [OrderController::class, 'removeFromCart'])->name('remove');
     });

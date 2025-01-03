@@ -23,8 +23,8 @@ class Size extends Model
     ];
 
     // Quan hệ với bảng gold_products (một size thuộc về một sản phẩm vàng)
-    public function goldProduct()
+    public function product()
     {
-        return $this->belongsTo(Product::class, 'products_id', 'products_id');
+        return $this->belongsTo(Product::class, 'products_id');
     }
 }

@@ -10,6 +10,8 @@
 
 <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,900" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 <link rel="stylesheet" href="{{ asset('/public/assets/css/vendor/bootstrap.min.css')}}">
 <link rel="stylesheet" href="{{ asset('/public/assets/css/vendor/pe-icon-7-stroke.css')}}">
@@ -48,6 +50,30 @@
     <script src="{{ asset('/public/assets/js/plugins/ajaxchimp.js')}}"></script>
     <script src="{{ asset('/public/assets/js/plugins/ajax-mail.js')}}"></script>
     <script src="{{ asset('/public/assets/js/main.js')}}"></script>
+    <script>
+
+    </script>
+    <!-- <script>
+        $('.pro-qty').prepend('<span class="dec qtybtn">-</span>');
+        $('.pro-qty').append('<span class="inc qtybtn">+</span>');
+        $('.qtybtn').on('click', function() {
+            var $button = $(this);
+            var oldValue = $button.parent().find('input').val();
+            if ($button.hasClass('inc')) {
+                var newVal = parseFloat(oldValue) + 1;
+            } else {
+                // Don't allow decrementing below zero
+                if (oldValue > 0) {
+                    var newVal = parseFloat(oldValue) - 1;
+                } else {
+                    newVal = 0;
+                }
+            }
+            $button.parent().find('input').val(newVal);
+        });
+    </script> -->
+
+
 </body>
 
 </html>
