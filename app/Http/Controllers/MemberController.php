@@ -42,6 +42,7 @@ class MemberController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'phone' => $request->phone,
+                'address' => $request->address,
                 'status' => 1,
                 'role_id' => 5,
                 'created_at' => now(),
@@ -84,6 +85,8 @@ class MemberController extends Controller
                 'member_id' => $member->member_id,
                 'name' => $member->name,
                 'email' => $member->email,
+                'phone' => $member->phone, // Add phone
+                'address' => $member->address, // Add address
                 'status' => $member->status
             ]);
 

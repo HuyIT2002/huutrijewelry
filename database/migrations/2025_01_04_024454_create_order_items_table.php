@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('price', 15, 2); // Giá của sản phẩm
             $table->dateTime('created_at')->nullable(); // Cột created_at riêng
             $table->dateTime('updated_at')->nullable(); // Cột updated_at riêng
+            $table->string('code_id')->unique(); // Mã đơn hàng (code_id)
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('products_id');
             $table->unsignedInteger('size_id');

@@ -18,6 +18,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\HomeUserController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CheckoutController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -258,6 +259,15 @@ Route::prefix('orders')
         // Route cho trang chi tiết đơn hàng
 
         Route::post('add-to-cart', [OrderController::class, 'addToCart'])->name('add-to-cart');
-        Route::post('create', [OrderController::class, 'create'])->name('create');
+        Route::post('/update-cart', [OrderController::class, 'updateCart'])->name('updateCart');
         Route::get('remove/{productId}', [OrderController::class, 'removeFromCart'])->name('remove');
+    });
+Route::prefix('checkout')
+    ->name('user.checkout.')
+    ->group(function () {
+        // Route để hiển thị trang thanh toán
+        Route::get('/checkout', [CheckoutController::class, 'index'])->name('view');
+
+        // Route để xử lý thanh toán
+        Route::post('process', [CheckoutController::class, 'processCheckout'])->name('process');
     });

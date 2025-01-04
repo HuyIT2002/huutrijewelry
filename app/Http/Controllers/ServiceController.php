@@ -19,7 +19,7 @@ class ServiceController extends Controller
     {
         // Truyền dữ liệu cho view danh sách dịch vụ (nếu có)
         $data = $this->categoryService->getAllCategoriesData();
-        return view('user.dichvu.dichvu', $data);
+        return view('user.dichvu.dich-vu', $data);
     }
 
     // Phương thức hiển thị chính sách bảo hành

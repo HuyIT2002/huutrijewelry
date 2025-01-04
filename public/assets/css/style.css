@@ -3133,7 +3133,7 @@ only screen and (max-width: 479.98px) {
 
 .custom-checkbox .custom-control-label,
 .custom-radio .custom-control-label {
-    font-size: 14px;
+    font-size: 20px;
     line-height: 1;
     padding-left: 10px;
     font-weight: 400;
@@ -6091,7 +6091,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .single-input-item label {
-    color: #222222;
+    color: #59571e;
     text-transform: capitalize;
     font-size: 14px;
 }

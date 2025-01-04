@@ -37,6 +37,16 @@
                             <div class="single-input-item">
                                 <input type="email" name="email" placeholder="Enter your Email" required />
                             </div>
+                            <div class="col-lg-12">
+                                <div class="single-input-item">
+                                    <input type="text" name="phone" placeholder="Nhập số điện thoại trùng với số zalo" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="single-input-item">
+                                    <input type="text" name="address" placeholder="Nhập số địa chỉ của bạn" required />
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="single-input-item">
@@ -45,15 +55,12 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="single-input-item">
-                                        <input type="text" name="phone" placeholder="Nhập số điện thoại trùng với số zalo" required />
+                                        <input type="password" name="password_confirmation" placeholder="Confirm your Password" required />
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="single-input-item">
-                                    <input type="password" name="password_confirmation" placeholder="Confirm your Password" required />
-                                </div>
-                            </div>
+
+
                             <div class="single-input-item">
                                 <button type="submit" class="btn btn-sqr">Tạo tài khoản</button>
                             </div>

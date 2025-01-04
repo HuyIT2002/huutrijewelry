@@ -72,8 +72,114 @@
             $button.parent().find('input').val(newVal);
         });
     </script> -->
+    <!-- <script>
+        $(document).ready(function() {
+            // Khi thay đổi số lượng
+            $('.qtybtn').on('click', function() {
+                var $input = $(this).siblings('.quantity-input'); // Lấy input chứa số lượng
+                var currentValue = parseInt($input.val());
+                var newValue = (this.className.includes('inc')) ? currentValue + 1 : currentValue - 1; // Tăng hoặc giảm
 
+                // Nếu giá trị mới hợp lệ (lớn hơn 0)
+                if (newValue >= 1) {
+                    $input.val(newValue); // Cập nhật số lượng mới trong input
 
+                    var price = $input.data('price'); // Giá sản phẩm
+                    var productId = $input.data('product-id'); // ID sản phẩm
+
+                    // Tính toán subtotal mới
+                    var newSubtotal = newValue * price;
+
+                    // Cập nhật lại tổng tiền trong bảng
+                    $('td.subtotal-amount[data-product-id="' + productId + '"]').text(newSubtotal.toLocaleString() + ' ₫');
+
+                    // Tự động gửi form để cập nhật giỏ hàng
+                    $('#updateCartForm').submit();
+                }
+            });
+
+            // Cập nhật giá trị subtotal khi người dùng thay đổi trực tiếp số lượng trong input
+            $('.quantity-input').on('input', function() {
+                var quantity = $(this).val(); // Số lượng mới
+                var price = $(this).data('price'); // Giá của sản phẩm
+                var productId = $(this).data('product-id'); // ID của sản phẩm
+
+                // Tính toán subtotal mới
+                var newSubtotal = quantity * price;
+
+                // Cập nhật lại tổng tiền trong bảng
+                $('td.subtotal-amount[data-product-id="' + productId + '"]').text(newSubtotal.toLocaleString() + ' ₫');
+
+                // Tự động gửi form để cập nhật giỏ hàng
+                $('#updateCartForm').submit();
+            });
+        });
+    </script> -->
+    <script>
+        $(document).ready(function() {
+            // Khi người dùng bấm nút tăng hoặc giảm
+            $('.qtybtn2').on('click', function() {
+                var $input = $(this).siblings('.quantity-input'); // Lấy input chứa số lượng
+                var currentValue = parseInt($input.val()); // Lấy giá trị hiện tại
+                var newValue = (this.className.includes('inc')) ? currentValue + 1 : currentValue - 1; // Tăng hoặc giảm
+
+                // Nếu giá trị mới hợp lệ (lớn hơn hoặc bằng 1)
+                if (newValue >= 1) {
+                    $input.val(newValue); // Cập nhật lại số lượng trong input
+
+                    var price = $input.data('price'); // Lấy giá của sản phẩm
+                    var productId = $input.data('product-id'); // Lấy ID sản phẩm
+
+                    // Tính toán subtotal mới
+                    var newSubtotal = newValue * price;
+
+                    // Cập nhật lại subtotal trong bảng
+                    $('td.subtotal-amount[data-product-id="' + productId + '"]').text(newSubtotal.toLocaleString() + ' ₫');
+
+                    // Tự động gửi form để cập nhật giỏ hàng
+                    $('#updateCartForm').submit();
+                }
+            });
+
+            // Cập nhật subtotal khi người dùng thay đổi trực tiếp số lượng trong input
+            $('.quantity-input').on('input', function() {
+                var quantity = $(this).val(); // Lấy số lượng mới
+                var price = $(this).data('price'); // Lấy giá sản phẩm
+                var productId = $(this).data('product-id'); // Lấy ID sản phẩm
+
+                // Tính toán subtotal mới
+                var newSubtotal = quantity * price;
+
+                // Cập nhật lại subtotal trong bảng
+                $('td.subtotal-amount[data-product-id="' + productId + '"]').text(newSubtotal.toLocaleString() + ' ₫');
+
+                // Tự động gửi form để cập nhật giỏ hàng
+                $('#updateCartForm').submit();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Cộng và trừ số lượng
+            $('.qty-btn').on('click', function() {
+                var $button = $(this);
+                var $input = $button.siblings('.quantity-input'); // Lấy input chứa số lượng
+                var oldValue = parseInt($input.val());
+
+                // Cộng hoặc trừ số lượng
+                if ($button.hasClass('inc')) {
+                    var newVal = oldValue + 1;
+                } else if ($button.hasClass('dec') && oldValue > 1) {
+                    var newVal = oldValue - 1;
+                } else {
+                    var newVal = oldValue; // Không cho giảm dưới 1
+                }
+
+                // Cập nhật giá trị input
+                $input.val(newVal);
+            });
+        });
+    </script>
 </body>
 
 </html>

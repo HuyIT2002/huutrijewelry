@@ -63,6 +63,76 @@
         }
     }
 </style>
+<style>
+    /* Đặt kiểu cho container */
+    .quantity-container {
+        display: flex;
+        align-items: center;
+        margin-top: 10px;
+        justify-content: flex-start;
+    }
+
+    /* Kiểu cho nhãn "Số lượng" */
+    .quantity-label {
+        font-size: 16px;
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    /* Container chứa các nút và input */
+    .quantity-box {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+    }
+
+    /* Kiểu cho nút cộng và trừ */
+    .qty-btn {
+        background-color: #f1f1f1;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 8px 12px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Khi hover vào nút cộng hoặc trừ */
+    .qty-btn:hover {
+        background-color: #ddd;
+    }
+
+    /* Kiểu cho input số lượng */
+    .quantity-input {
+        width: 40px;
+        text-align: center;
+        border: none;
+        font-size: 16px;
+        margin: 0 5px;
+    }
+
+    /* Đảm bảo không có viền xung quanh khi focus */
+    .quantity-input:focus {
+        outline: none;
+    }
+
+    /* Nếu input có giá trị <= 0, disable nút trừ */
+    .qty-btn.dec:disabled {
+        background-color: #f9f9f9;
+        cursor: not-allowed;
+    }
+
+    /* Cách tạo khoảng cách giữa nút và input */
+    .quantity-box button:focus {
+        outline: none;
+    }
+
+    .submit-btn {
+        display: none;
+    }
+</style>
 <!-- breadcrumb area start -->
 <div class="breadcrumb-area">
     <div class="container">
@@ -109,25 +179,43 @@
                                 <div class="price-box">
                                     <span class="price-regular">Giá sản phẩm :{{ number_format($product->price, 0, ',', '.') }} VND</span>
                                 </div>
-                                <p class="pro-desc">{{ $product->description }}</p>
-                                <div class="quantity-cart-box d-flex align-items-center">
-                                    <h6 class="option-title">Số lượng mua:</h6>
-                                    <div class="quantity">
-                                        <div class="pro-qty"><input type="text" value="1"></div>
+                                <p class="pro-desc">Nội dung : {{ $product->description }}</p>
+                                <form action="{{ route('user.orders.add-to-cart') }}" method="POST">
+                                    @csrf
+                                    <div class="quantity-container">
+                                        <label for="quantity" class="quantity-label">Số lượng:</label>
+                                        <div class="quantity-box">
+                                            <button type="button" class="qty-btn dec">-</button>
+                                            <input type="number" name="quantity" value="1" class="quantity-input" min="1" />
+                                            <button type="button" class="qty-btn inc">+</button>
+                                        </div>
                                     </div>
+                                    <br>
+
+                                    @if(isset($sizes) && $sizes->count() > 0)
+                                    <div class="pro-size">
+                                        <h6 class="option-title">Size:</h6>
+                                        <select name="size" required>
+                                            @foreach($sizes as $size)
+                                            <option value="{{ $size->size_id }}">{{ $size->size }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @else
+                                    <input type="hidden" name="size" value=""> <!-- Đặt giá trị size bằng 0 nếu không có size -->
+                                    @endif
+
+                                    <input type="hidden" name="products_id" value="{{ $product->products_id }}">
                                     <div class="action_link">
-                                        @if($product->so_luong > 0) <!-- Kiểm tra nếu so_luong > 0 thì hiển thị "Add to cart" -->
-                                        <form action="{{ route('user.orders.add-to-cart') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="products_id" value="{{ $product->products_id }}">
-                                            <button type="submit" class="btn btn-cart2">Thêm sản phẩm vào giỏ hàng</button>
-                                        </form>
+                                        @if($product->so_luong > 0)
+                                        <button type="submit" class="btn btn-cart2">Thêm sản phẩm vào giỏ hàng</button>
                                         @else
-                                        <!-- Nếu so_luong = 0, bạn có thể thay thế bằng thông báo khác -->
                                         <span class="btn btn-cart2">Hết hàng</span>
                                         @endif
                                     </div>
-                                </div>
+                                </form>
+
+
                                 <div class="pro-size">
                                     <h6 class="option-title">Hướng dẫn đo size:</h6>
                                     <select class="nice-select">
@@ -137,14 +225,7 @@
                                         <option value="{{ route('user.services.do-size-lac-vong') }}">Hướng dẫn đo size Lắc tay và Vòng tay</option>
                                     </select>
                                 </div>
-                                <div class="pro-size">
-                                    <h6 class="option-title">Size :</h6>
-                                    <select class="nice-select">
-                                        @foreach($sizes as $size)
-                                        <option>{{ $size->size }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
                                 <div class="like-icon">
                                     <a class="facebook" href="#"><i class="fa fa-facebook"></i>like</a>
                                     <a class="twitter" href="#"><i class="fa fa-twitter"></i>zalo</a>
@@ -165,6 +246,12 @@
                                     <li>
                                         <a class="active" data-bs-toggle="tab" href="#tab_one">Chi tiết của sản phẩm </a>
                                     </li>
+                                    <li>
+                                        <a data-bs-toggle="tab" href="#tab_two">Chính sách thu đổi</a>
+                                    </li>
+                                    <li>
+                                        <a data-bs-toggle="tab" href="#tab_three">Chính sách bảo hành</a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content reviews-tab">
                                     <div class="tab-pane fade show active" id="tab_one">
@@ -180,6 +267,106 @@
                                             <p><strong>Số lượng:</strong> {{ $product->so_luong ?? 'Không xác định' }}</p>
                                         </div>
                                     </div>
+                                    <div class="tab-pane fade" id="tab_two">
+                                        <div class="container py-5">
+                                            <h1 class="text-center fw-bold" style="color: #DAA520; font-size: 36px;">Chính Sách Thu Đổi</h1>
+
+                                            <!-- Chính sách 1 -->
+                                            <div class="policy-section bg-light p-4 rounded-3 shadow-sm mb-4 border border-gold">
+                                                <h2 class="h4 fw-bold" style="color: #DAA520;">1. Đổi ngang không bù vàng</h2>
+                                                <ul class="list-unstyled mt-3">
+                                                    <li><i class="bi bi-check-circle-fill" style="color: #DAA520;"></i> Nhẫn tròn trơn 99.99</li>
+                                                    <li><i class="bi bi-check-circle-fill" style="color: #DAA520;"></i> Nữ trang 610/416. Chế tác bằng công nghệ đúc, đan máy. Trọng lượng dưới 3 chỉ, còn nguyên vẹn, không mốp méo hay biến dạng.</li>
+                                                </ul>
+                                            </div>
+
+                                            <!-- Chính sách 2 -->
+                                            <div class="policy-section bg-light p-4 rounded-3 shadow-sm mb-4 border border-gold">
+                                                <h2 class="h4 fw-bold" style="color: #DAA520;">2. Chính sách vàng đổi vàng</h2>
+                                                <p style="color: #DAA520;">Quý khách bù thêm phí đổi mới với các sản phẩm sau:</p>
+                                                <ul class="list-unstyled">
+                                                    <li><i class="bi bi-check-circle-fill" style="color: #DAA520;"></i> Vàng trang sức 980, vàng 99.9…</li>
+                                                    <li><i class="bi bi-check-circle-fill" style="color: #DAA520;"></i> Các loại vàng 416/610 chế tác bằng thủ công như xi men, vòng, dây bộng, các sản phẩm đồ bộng và sản phẩm cắt máy.</li>
+                                                    <li><i class="bi bi-check-circle-fill" style="color: #DAA520;"></i> Các sản phẩm đặt theo thiết kế riêng hoặc cắt sửa theo yêu cầu trước đó.</li>
+                                                </ul>
+                                            </div>
+
+                                            <!-- Chính sách 3 -->
+                                            <div class="policy-section bg-light p-4 rounded-3 shadow-sm mb-4 border border-gold">
+                                                <h2 class="h4 fw-bold" style="color: #DAA520;">3. Chính sách thu đổi vàng Ý CN ITALY 750</h2>
+                                                <p style="color: #DAA520;">Mua tại HỮU TRÍ JEWELRY. So với hóa đơn, tính theo (gam%).</p>
+                                                <ul class="list-unstyled">
+                                                    <li><i class="bi bi-check-circle-fill" style="color: #DAA520;"></i> Sản phẩm còn nguyên vẹn, không hư gãy, biến dạng. Đổi lớn 85%, bán lại thu 80%.</li>
+                                                    <li><i class="bi bi-check-circle-fill" style="color: #DAA520;"></i> Sản phẩm hư gãy tính 70% theo giá trị hóa đơn hoặc trừ đá mua theo chỉ giá tại thời điểm.</li>
+                                                    <li><i class="bi bi-check-circle-fill" style="color: #DAA520;"></i> Thiết kế theo yêu cầu: đổi lớn 80%, bán thu lại 75%.</li>
+                                                    <li><i class="bi bi-check-circle-fill" style="color: #DAA520;"></i> Thiết kế riêng đổi lớn 75%, bán thu 70%.</li>
+                                                </ul>
+                                            </div>
+
+                                            <!-- Chính sách 4 -->
+                                            <div class="policy-section bg-light p-4 rounded-3 shadow-sm mb-4 border border-gold">
+                                                <h2 class="h4 fw-bold" style="color: #DAA520;">4. Các sản phẩm không mua tại HỮU TRÍ JEWELRY</h2>
+                                                <p style="color: #DAA520;">So giá tại thời điểm.</p>
+                                                <ul class="list-unstyled">
+                                                    <li><i class="bi bi-check-circle-fill" style="color: #DAA520;"></i> Sản phẩm còn nguyên vẹn, không hư gãy, biến dạng. Đổi lớn 80%, bán lại thu 70%.</li>
+                                                    <li><i class="bi bi-check-circle-fill" style="color: #DAA520;"></i> Khách hàng lưu ý: Các sản phẩm không mua tại HỮU TRÍ JEWELRY trao đổi theo gam tính %. Chỉ áp dụng giá Ý loại III trở xuống.</li>
+                                                </ul>
+                                                <p style="color: #DAA520;">- Sản phẩm có đính đá nặng dưới 8 gam và dây chuyền dưới 15 gam.</p>
+                                                <p style="color: #DAA520;">- Sản phẩm có trọng lượng ngoài 2 trường hợp trên sẽ tính theo giá chỉ 750 tại thời điểm dù còn nguyên vẹn. Nếu khách hàng chỉ bán mà không trao đổi.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="tab_three">
+                                        <div class="service-policy mt-4">
+                                            <h1 class="text-center fw-bold" style="color: #DAA520; font-size: 36px;">Dịch Vụ Bảo Hành</h1>
+
+                                            <h3 class="fw-bold" style="color: #DAA520;">1. Sản phẩm 610/416 mua tại Hữu Trí Jewelry được đổi sang sản phẩm khác trong 7 ngày</h3>
+                                            <p class="text-dark">Kể từ ngày mua trên hóa đơn, quý khách được đổi miễn phí.</p>
+
+                                            <h4 class="fw-bold" style="color: #DAA520;">+ Điều kiện đổi mới miễn phí:</h4>
+                                            <ul class="text-dark">
+                                                <li>Sản phẩm mua tại Hữu Trí Jewelry chưa qua sử dụng, còn đầy đủ giấy tờ hóa đơn, kiểm định.</li>
+                                                <li>Sản phẩm phải còn nguyên vẹn, không bị hư hỏng, trầy xước, đúng trọng lượng ghi trên hóa đơn bán hàng kèm theo.</li>
+                                                <li>Sản phẩm bị lỗi và được Hữu Trí Jewelry xác nhận là lỗi do công ty không phải do khách sử dụng gây ra.</li>
+                                                <li>Chỉ được đổi sang sản phẩm cùng loại (610 đổi 610).</li>
+                                                <li>Chỉ được đổi không được trả hàng lấy lại tiền.</li>
+                                                <li>Giá vàng tính theo giá hiện tại tại thời điểm đổi món khác.</li>
+                                                <li>Sản phẩm đổi phải bằng hoặc lớn hơn sản phẩm cũ.</li>
+                                                <li>Chỉ được đổi mới 1 lần duy nhất. Sản phẩm đã được đổi trước đó không được đổi mới trừ trường hợp có lỗi do nhà sản xuất mà khi bán không phát hiện.</li>
+                                                <li>Miễn phí tân trang làm mới, gắn đá rớt CZ sửa chữa nhẹ, khắc tên.</li>
+                                                <li>Miễn phí mạ trắng (cho lần đầu tiên) khi khách hàng mua sản phẩm, Italy 750, 416, bạch kim.</li>
+                                            </ul>
+
+                                            <h4 class="fw-bold" style="color: #DAA520;">+ Các trường hợp không được đổi mới miễn phí:</h4>
+                                            <ul class="text-dark">
+                                                <li>Trang sức đồng hồ, vòng đá, trầm, trang sức phong thủy.</li>
+                                                <li>Dạng ống bộng như Ximen, vòng ống, kiềng cổ vàng 610, 416, 980 loại không khóa, vòng kiềng.</li>
+                                                <li>Sản phẩm đã cắt, sửa, thu ni, làm lớn theo yêu cầu của khách.</li>
+                                                <li>Sản phẩm đã thay đổi màu sắc, đá màu, hình dạng theo yêu cầu của khách.</li>
+                                                <li>Sản phẩm đặt làm riêng hoặc đã khắc tên riêng cho khách.</li>
+                                            </ul>
+
+                                            <h3 class="fw-bold" style="color: #DAA520;">2. Quy định dịch vụ sửa chữa và tân trang</h3>
+                                            <ul class="text-dark">
+                                                <li>Sản phẩm mang đến sửa chữa phải được kiểm tra và lập biên nhận rõ ràng, bao gồm thông tin khách hàng và tình trạng sản phẩm.</li>
+                                                <li>Cam kết hoàn thành sửa chữa trong vòng 1-5 ngày hoặc theo thỏa thuận với khách hàng.</li>
+                                                <li>Khách hàng được thông báo ngay khi sản phẩm hoàn thành.</li>
+                                                <li>Cửa hàng chịu trách nhiệm bảo quản sản phẩm trong quá trình sửa chữa và giao lại đúng hiện trạng.</li>
+                                                <li>Trong trường hợp mất mát hoặc hư hỏng, cửa hàng sẽ bồi thường phù hợp với giá trị sản phẩm.</li>
+                                            </ul>
+
+                                            <h3 class="fw-bold" style="color: #DAA520;">3. Quy định dành cho khách hàng</h3>
+                                            <ul class="text-dark">
+                                                <li>Khách hàng cần cung cấp đầy đủ thông tin cá nhân khi mua hàng hoặc yêu cầu dịch vụ lớn.</li>
+                                                <li>Thanh toán đúng hạn và kiểm tra kỹ sản phẩm trước khi rời cửa hàng.</li>
+                                            </ul>
+
+                                            <p class="text-dark mt-4">Lưu ý: Nội quy này được áp dụng nhằm bảo vệ quyền lợi của cả khách hàng và cửa hàng. Mọi khiếu nại hoặc thắc mắc vui lòng liên hệ: 0914 38 37 79</p>
+                                            <h4 class="fw-bold mt-4" style="color: #DAA520;">Ban hành bởi: CTY TNHH TM DV VÀNG BẠC ĐÁ QUÝ HỮU TRÍ JEWELRY.</h4>
+                                        </div>
+                                    </div>
+                                    ``
+
                                 </div>
                             </div>
                         </div>

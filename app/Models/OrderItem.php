@@ -13,10 +13,13 @@ class OrderItem extends Model
     protected $primaryKey = 'order_item_id';
     protected $fillable = [
         'order_id',
-        'product_id',
+        'products_id',
+        'code_id',
         'size_id',
         'quantity',
         'price',
+        'created_at',
+        'updated_at'
     ];
 
     // Quan hệ với bảng `orders`
@@ -24,11 +27,11 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Order::class, 'order_id');
     }
-
+    public $timestamps = false;
     // Quan hệ với bảng `products`
     public function product()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Product::class, 'products_id');
     }
 
     // Quan hệ với bảng `sizes`

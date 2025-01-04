@@ -110,9 +110,9 @@
                                         <img class="sec-img" src="{{ asset('/public/admin/images/products/' . $product->images) }}" alt="product">
                                     </a>
                                     <div class="cart-hover">
-                                        @if($product->so_luong > 0) <!-- Kiểm tra nếu so_luong > 0 thì hiển thị nút -->
-                                        <button class="btn btn-cart">Thêm sản phẩm vào giỏ hàng</button>
-                                        @endif
+                                        <a href="{{ route('user.shops.details', $product->slug) }}" class="btn btn-cart">
+                                            Thông tin sản phẩm
+                                        </a>
                                     </div>
                                 </figure>
                                 <div class="product-caption text-center">
@@ -134,10 +134,11 @@
                                         <img class="pri-img" src="{{ asset('public/admin/images/products/' . $product->images) }}" alt="product">
                                     </a>
                                     <div class="cart-hover">
-                                        @if($product->so_luong > 0) <!-- Kiểm tra nếu so_luong > 0 thì hiển thị nút -->
-                                        <button class="btn btn-cart">Thêm sản phẩm vào giỏ hàng</button>
-                                        @endif
+                                        <a href="{{ route('user.shops.details', $product->slug) }}" class="btn btn-cart">
+                                            Thông tin sản phẩm
+                                        </a>
                                     </div>
+
                                 </figure>
                                 <div class="product-content-list">
                                     <h5 class="product-name"><a href="{{ route('user.shops.details', $product->slug) }}">{{ $product->product_name }}</a></h5>

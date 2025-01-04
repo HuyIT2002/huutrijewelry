@@ -12,15 +12,17 @@ class Order extends Model
     protected $primaryKey = 'order_id';
     protected $fillable = [
         'member_id',
-        'code_id',
         'receiver_name',
         'receiver_phone',
         'receiver_email',
         'shipping_address',
         'total_price',
         'status',
+        'paymentmethod',
+        'created_at',
+        'updated_at'
     ];
-
+    public $timestamps = false;
     // Quan hệ với bảng `members`
     public function member()
     {

@@ -85,7 +85,7 @@
             <li>Sản phẩm đặt làm riêng hoặc đã khắc tên riêng cho khách.</li>
         </ul>
 
-        <h3 class="fw-bold" style="color: #DAA520;">5. Quy định dịch vụ sửa chữa và tân trang</h3>
+        <h3 class="fw-bold" style="color: #DAA520;">2. Quy định dịch vụ sửa chữa và tân trang</h3>
         <ul class="text-dark">
             <li>Sản phẩm mang đến sửa chữa phải được kiểm tra và lập biên nhận rõ ràng, bao gồm thông tin khách hàng và tình trạng sản phẩm.</li>
             <li>Cam kết hoàn thành sửa chữa trong vòng 1-5 ngày hoặc theo thỏa thuận với khách hàng.</li>
@@ -94,7 +94,7 @@
             <li>Trong trường hợp mất mát hoặc hư hỏng, cửa hàng sẽ bồi thường phù hợp với giá trị sản phẩm.</li>
         </ul>
 
-        <h3 class="fw-bold" style="color: #DAA520;">6. Quy định dành cho khách hàng</h3>
+        <h3 class="fw-bold" style="color: #DAA520;">3. Quy định dành cho khách hàng</h3>
         <ul class="text-dark">
             <li>Khách hàng cần cung cấp đầy đủ thông tin cá nhân khi mua hàng hoặc yêu cầu dịch vụ lớn.</li>
             <li>Thanh toán đúng hạn và kiểm tra kỹ sản phẩm trước khi rời cửa hàng.</li>
