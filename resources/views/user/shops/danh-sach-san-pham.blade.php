@@ -1,5 +1,45 @@
 @extends('welcome')
 @section('content')
+<style>
+    .sec-img,
+    .pri-img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        /* Đảm bảo ảnh được cắt đúng tỉ lệ */
+    }
+</style>
+<style>
+    .product-thumb {
+        position: relative;
+    }
+
+    .sold-out-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Nền phủ mờ */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        z-index: 10;
+        pointer-events: none;
+        /* Không ngăn cản người dùng click */
+        text-transform: uppercase;
+    }
+
+    .sold-out-overlay span {
+        background-color: rgba(255, 0, 0, 0.8);
+        padding: 10px 20px;
+        border-radius: 5px;
+    }
+</style>
 <div class="breadcrumb-area">
     <div class="container">
         <div class="row">
@@ -32,7 +72,7 @@
                         <div class="sidebar-body">
                             <ul class="shop-categories">
                                 @foreach($categories as $category)
-                                <li><a href="#">{{ $category->category_name }} <span>({{ $category->products_count }})</span></a></li>
+                                <li><a href="{{ route('user.shops.search-products', $category->slug) }}">{{ $category->category_name }} <span>({{ $category->products_count }})</span></a></li>
                                 @endforeach
                             </ul>
                         </div>
@@ -99,73 +139,125 @@
 
                     <!-- product item list wrapper start -->
                     <div class="shop-product-wrap list-view row mbn-30">
+                        @if($products->count() > 0)
                         @foreach($products as $product)
                         @if($product->status == 1)
                         <div class="col-md-4 col-sm-6">
-                            <!-- product grid start -->
+                            <!-- Product Grid Start -->
                             <div class="product-item">
-                                <figure class="product-thumb">
-                                    <a href="{{ route('user.shops.details', $product->slug) }}">
-                                        <img class="pri-img" src="{{ asset('/public/admin/images/products/' . $product->images) }}" alt="product">
-                                        <img class="sec-img" src="{{ asset('/public/admin/images/products/' . $product->images) }}" alt="product">
+                                <figure class="product-thumb position-relative">
+                                    <a href="{{ route('user.shops.details', ['slug' => $product->slug, 'products_id' => $product->products_id]) }}">
+                                        <img class="pri-img" src="{{ asset('/public/admin/images/products/' . $product->images) }}" alt="{{ $product->product_name }}">
+                                        <img class="sec-img" src="{{ asset('/public/admin/images/products/' . $product->images) }}" alt="{{ $product->product_name }}">
                                     </a>
                                     <div class="cart-hover">
-                                        <a href="{{ route('user.shops.details', $product->slug) }}" class="btn btn-cart">
+                                        <a href="{{ route('user.shops.details', ['slug' => $product->slug, 'products_id' => $product->products_id]) }}" class="btn btn-cart">
                                             Thông tin sản phẩm
                                         </a>
                                     </div>
+
+                                    <!-- Overlay "Hết hàng" -->
+                                    @if($product->so_luong == 0)
+                                    <div class="sold-out-overlay">
+                                        <span>Hết hàng</span>
+                                    </div>
+                                    @endif
                                 </figure>
+
+                                <!-- Product Caption -->
                                 <div class="product-caption text-center">
                                     <h6 class="product-name">
-                                        <a href="{{ route('user.shops.details', $product->slug) }}">{{ $product->product_name }}</a>
+                                        <a href="{{ route('user.shops.details', ['slug' => $product->slug, 'products_id' => $product->products_id]) }}">
+                                            {{ $product->product_name }}
+                                        </a>
                                     </h6>
                                     <div class="price-box">
                                         <span class="price-regular">{{ number_format($product->price, 0, ',', '.') }} VND</span>
                                     </div>
                                 </div>
                             </div>
-                            <!-- product grid end -->
+                            <!-- Product Grid End -->
 
-                            <!-- product list item end -->
+                            <!-- Product List Item Start -->
                             <div class="product-list-item">
-                                <figure class="product-thumb">
-                                    <a href="{{ route('user.shops.details', $product->slug) }}">
-                                        <img class="sec-img" src="{{ asset('/public/admin/images/products/' . $product->images) }}" alt="product">
-                                        <img class="pri-img" src="{{ asset('public/admin/images/products/' . $product->images) }}" alt="product">
+                                <figure class="product-thumb position-relative">
+                                    <a href="{{ route('user.shops.details', ['slug' => $product->slug, 'products_id' => $product->products_id]) }}">
+                                        <img class="sec-img" src="{{ asset('/public/admin/images/products/' . $product->images) }}" alt="{{ $product->product_name }}">
+                                        <img class="pri-img" src="{{ asset('/public/admin/images/products/' . $product->images) }}" alt="{{ $product->product_name }}">
                                     </a>
                                     <div class="cart-hover">
-                                        <a href="{{ route('user.shops.details', $product->slug) }}" class="btn btn-cart">
+                                        <a href="{{ route('user.shops.details', ['slug' => $product->slug, 'products_id' => $product->products_id]) }}" class="btn btn-cart">
                                             Thông tin sản phẩm
                                         </a>
                                     </div>
 
+                                    <!-- Kiểm tra nếu hết hàng -->
+                                    @if($product->so_luong == 0)
+                                    <div class="sold-out-overlay">
+                                        <span>Hết hàng</span>
+                                    </div>
+                                    @endif
                                 </figure>
+                                <!-- Product List Content -->
                                 <div class="product-content-list">
-                                    <h5 class="product-name"><a href="{{ route('user.shops.details', $product->slug) }}">{{ $product->product_name }}</a></h5>
+                                    <h5 class="product-name">
+                                        <a href="{{ route('user.shops.details', ['slug' => $product->slug, 'products_id' => $product->products_id]) }}">
+                                            {{ $product->product_name }}
+                                        </a>
+                                    </h5>
                                     <div class="price-box">
                                         <span class="price-regular">{{ number_format($product->price, 0, ',', '.') }} VND</span>
-
                                     </div>
                                     <p>{{ $product->description }}</p>
                                 </div>
                             </div>
-                            <!-- product list item end -->
+                            <!-- Product List Item End -->
                         </div>
                         @endif
                         @endforeach
+                        @else
+                        <p class="text-center">Không có sản phẩm nào trong danh mục này.</p>
+                        @endif
                     </div>
+
                     <!-- product item list wrapper end -->
 
-                    <!-- start pagination area -->
+
                     <div class="paginatoin-area text-center">
                         <ul class="pagination-box">
-                            <li><a class="previous" href="#"><i class="pe-7s-angle-left"></i></a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a class="next" href="#"><i class="pe-7s-angle-right"></i></a></li>
+                            <!-- Nút Previous -->
+                            @if ($products->onFirstPage())
+                            <li class="disabled"><a class="previous" href="#"><i class="pe-7s-angle-left"></i></a></li>
+                            @else
+                            <li><a class="previous" href="{{ $products->previousPageUrl() }}"><i class="pe-7s-angle-left"></i></a></li>
+                            @endif
+
+                            <!-- Liệt kê các trang -->
+                            @foreach ($products->links()->elements as $element)
+                            @if (is_string($element))
+                            <li class="disabled"><a href="#">{{ $element }}</a></li>
+                            @endif
+
+                            @if (is_array($element))
+                            @foreach ($element as $page => $url)
+                            @if ($page == $products->currentPage())
+                            <li class="active"><a href="#">{{ $page }}</a></li>
+                            @else
+                            <li><a href="{{ $url }}">{{ $page }}</a></li>
+                            @endif
+                            @endforeach
+                            @endif
+                            @endforeach
+
+                            <!-- Nút Next -->
+                            @if ($products->hasMorePages())
+                            <li><a class="next" href="{{ $products->nextPageUrl() }}"><i class="pe-7s-angle-right"></i></a></li>
+                            @else
+                            <li class="disabled"><a class="next" href="#"><i class="pe-7s-angle-right"></i></a></li>
+                            @endif
                         </ul>
                     </div>
+
                     <!-- end pagination area -->
                 </div>
             </div>

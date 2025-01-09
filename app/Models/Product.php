@@ -51,6 +51,6 @@ class Product extends Model
     // Model Product (App\Models\Product)
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id'); // Trỏ đúng vào cột khóa ngoại
+        return $this->belongsTo(Category::class, 'category_id', 'category_id');  // Trỏ đúng vào cột khóa ngoại
     }
 }

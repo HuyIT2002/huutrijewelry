@@ -41,29 +41,23 @@
                                                     <span>{{ $parent->name }}</span>
                                                     <ul>
                                                         @foreach ($parent->categories as $category)
-                                                        <li><a href="{{ url('category/' . $category->slug) }}">{{ $category->category_name }}</a></li>
+                                                        <li><a href="{{ route('user.shops.search-products', $category->slug) }}">{{ $category->category_name }}</a></li>
                                                         @endforeach
                                                     </ul>
                                                 </li>
                                                 @endforeach
-                                                <li class="megamenu-banners d-none d-lg-block">
-                                                    <a href="product-details.html">
-                                                        <img src="assets/img/banner/img1-static-menu.jpg" alt="">
-                                                    </a>
-                                                </li>
-                                                <li class="megamenu-banners d-none d-lg-block">
-                                                    <a href="product-details.html">
-                                                        <img src="assets/img/banner/img2-static-menu.jpg" alt="">
-                                                    </a>
-                                                </li>
+
                                             </ul>
 
                                         </li>
                                         <li><a href="shop.html">Trang sức cưới <i class="fa fa-angle-down"></i></a>
                                             <ul class="dropdown">
                                                 @foreach ($categories as $category)
-                                                <li><a href="#">{{ $category->category_name }}</a></li>
+                                                @if (in_array($category->category_id, [1, 2, 3])) <!-- Chỉ hiển thị category_name có id là 1, 2, 3 -->
+                                                <li><a href="{{ route('user.shops.search-products', $category->slug) }}">{{ $category->category_name }}</a></li>
+                                                @endif
                                                 @endforeach
+
                                             </ul>
 
                                         </li>

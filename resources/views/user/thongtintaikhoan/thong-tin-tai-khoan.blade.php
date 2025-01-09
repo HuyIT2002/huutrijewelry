@@ -259,6 +259,44 @@
         background-color: #495057;
     }
 </style>
+<style>
+    .modal {
+        display: none;
+    }
+
+    .modal-dialog {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        /* Đảm bảo modal nằm giữa màn hình */
+    }
+
+    .modal-body {
+        max-height: 70vh;
+        overflow-y: auto;
+        /* Kích hoạt thanh cuộn */
+    }
+
+    @media (max-width: 768px) {
+        .modal-lg {
+            width: 90%;
+            margin: auto;
+        }
+
+        .modal-content {
+            margin: 10px;
+            /* Tạo khoảng cách giữa modal và viền màn hình */
+        }
+    }
+
+    .modal.fade.show {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        /* Đảm bảo modal hiển thị giữa màn hình */
+    }
+</style>
 
 <div class="breadcrumb-area">
     <div class="container">
@@ -354,46 +392,117 @@
                                     <!-- Single Tab Content Start -->
                                     <div class="tab-pane fade" id="orders" role="tabpanel">
                                         <div class="myaccount-content">
-                                            <h5>Orders</h5>
+                                            <h5>Sản phẩm đã đặt</h5>
                                             <div class="myaccount-table table-responsive text-center">
+                                                <h4 class="mb-3">Danh sách đơn hàng của bạn</h4>
                                                 <table class="table table-bordered">
                                                     <thead class="thead-light">
                                                         <tr>
-                                                            <th>Order</th>
-                                                            <th>Date</th>
-                                                            <th>Status</th>
-                                                            <th>Total</th>
-                                                            <th>Action</th>
+                                                            <th>Mã đơn hàng</th>
+                                                            <th>Ngày đặt</th>
+                                                            <th>Trạng thái</th>
+                                                            <th>Phương thức thanh toán</th>
+                                                            <th>Tổng tiền</th>
+                                                            <th>Chi tiết</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        @if($orders->count() > 0)
+                                                        @foreach($orders as $order)
                                                         <tr>
-                                                            <td>1</td>
-                                                            <td>Aug 22, 2018</td>
-                                                            <td>Pending</td>
-                                                            <td>$3000</td>
-                                                            <td><a href="cart.html" class="btn btn-sqr">View</a>
+                                                            <td id="order-{{ $order->order_id }}">{{ $loop->iteration }}</td>
+
+                                                            <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d-m-Y H:i') }}</td>
+                                                            <td>
+                                                                @switch($order->status)
+                                                                @case(0)
+                                                                <span class="badge bg-warning text-dark">Chưa duyệt</span>
+                                                                @break
+                                                                @case(1)
+                                                                <span class="badge bg-success">Đã duyệt</span>
+                                                                @break
+                                                                @case(2)
+                                                                <span class="badge bg-danger">Đã hủy</span>
+                                                                @break
+                                                                @case(3)
+                                                                <span class="badge bg-info">Đang giao</span>
+                                                                @break
+                                                                @case(4)
+                                                                <span class="badge bg-primary">Giao thành công</span>
+                                                                @break
+                                                                @endswitch
+                                                            </td>
+                                                            <td>{{ $order->paymentmethod == 0 ? 'Nhận hàng thanh toán' : 'Thanh toán qua thẻ' }}</td>
+                                                            <td>{{ number_format($order->total_price, 0, ',', '.') }} VND</td>
+                                                            <td>
+                                                                <!-- Nút mở modal -->
+                                                                <button type="button" class="btn btn-sqr btn-primary" data-bs-toggle="modal" data-bs-target="#orderDetailsModal-{{ $order->order_id }}">
+                                                                    Xem chi tiết
+                                                                </button>
                                                             </td>
                                                         </tr>
+                                                        @endforeach
+                                                        @else
                                                         <tr>
-                                                            <td>2</td>
-                                                            <td>July 22, 2018</td>
-                                                            <td>Approved</td>
-                                                            <td>$200</td>
-                                                            <td><a href="cart.html" class="btn btn-sqr">View</a>
-                                                            </td>
+                                                            <td colspan="6">Bạn chưa có đơn hàng nào.</td>
                                                         </tr>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>June 12, 2017</td>
-                                                            <td>On Hold</td>
-                                                            <td>$990</td>
-                                                            <td><a href="cart.html" class="btn btn-sqr">View</a>
-                                                            </td>
-                                                        </tr>
+                                                        @endif
                                                     </tbody>
                                                 </table>
+
+                                                <!-- Vòng lặp để đặt modal -->
+                                                @foreach($orders as $order)
+                                                <div class="modal fade" id="orderDetailsModal-{{ $order->order_id }}" tabindex="-1" aria-labelledby="orderDetailsModalLabel-{{ $order->order_id }}" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <!-- Modal header -->
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" data-order-id="{{ $order->order_id }}">Chi Tiết Đơn Hàng #{{ $loop->iteration }}</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <!-- Modal body -->
+                                                            <div class="modal-body">
+                                                                @if($order->orderItems?->count() > 0)
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Sản phẩm</th>
+                                                                            <th>Mã sản phẩm</th>
+                                                                            <th>Size</th>
+                                                                            <th>Số lượng</th>
+                                                                            <th>Giá</th>
+                                                                            <th>Ngày đặt</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach($order->orderItems as $item)
+                                                                        <tr>
+                                                                            <td>{{ $item->product->product_name ?? 'Không xác định' }}</td>
+                                                                            <td>{{ $item->code_id ?? 'Không có' }}</td>
+                                                                            <td>{{ $item->size->size ?? 'Không có' }}</td>
+                                                                            <td>{{ $item->quantity }}</td>
+                                                                            <td>{{ number_format($item->price, 0, ',', '.') }} VND</td>
+                                                                            <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y H:i') }}</td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                                @else
+                                                                <p class="text-center">Không có sản phẩm trong đơn hàng này.</p>
+                                                                @endif
+                                                            </div>
+                                                            <!-- Modal footer -->
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+
+
                                             </div>
+
                                         </div>
                                     </div>
                                     <!-- Single Tab Content End -->
@@ -448,9 +557,7 @@
                                         </div>
 
                                     </div>
-                                    <!-- Single Tab Content End -->
 
-                                    <!-- Single Tab Content Start -->
                                     <div class="tab-pane fade" id="account-info" role="tabpanel">
                                         <div class="myaccount-content">
                                             <h5>Thông tin tài khoản </h5>

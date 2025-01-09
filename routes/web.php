@@ -138,9 +138,9 @@ Route::prefix('posts')
         Route::get('/', [PostController::class, 'index'])->name('index');
         Route::get('/create', [PostController::class, 'create'])->name('create');
         Route::post('/', [PostController::class, 'store'])->name('store');
-        Route::get('/edit/{post_id}', [PostController::class, 'edit'])->name('edit');
-        Route::post('/update/{post_id}', [PostController::class, 'update'])->name('update');
-        Route::post('/products/danh-sach-san-pham/{products_id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
+        Route::get('/edit/{posts_id}', [PostController::class, 'edit'])->name('edit');
+        Route::post('/update/{posts_id}', [PostController::class, 'update'])->name('update');
+        Route::delete('/delete/{posts_id}', [CategoryPostController::class, 'destroy'])->name('destroy'); // Xóa CategoryPost
         Route::get('/update-status/{post_id}', [PostController::class, 'updateStatus'])->name('update-status');
         Route::get('/posts/{posts_id}', [PostController::class, 'show'])->name('admin.posts.show');
     });
@@ -214,7 +214,9 @@ Route::prefix('shops')
         Route::get('/danh-sach-san-pham', [ShopController::class, 'index'])->name('list');
 
         // Route cho trang chi tiết sản phẩm
-        Route::get('/chi-tiet-san-pham/{slug}', [ShopController::class, 'show'])->name('details');
+        Route::get('/chi-tiet-san-pham/{slug}/{products_id?}', [ShopController::class, 'show'])->name('details');
+
+        Route::get('/category/{slug}', [ShopController::class, 'showCategoryProducts'])->name('search-products');
     });
 
 
@@ -257,7 +259,7 @@ Route::prefix('orders')
         Route::get('/', [OrderController::class, 'index'])->name('list');
 
         // Route cho trang chi tiết đơn hàng
-
+        Route::get('/orders/details/{order_id}', [OrderController::class, 'show'])->name('details');
         Route::post('add-to-cart', [OrderController::class, 'addToCart'])->name('add-to-cart');
         Route::post('/update-cart', [OrderController::class, 'updateCart'])->name('updateCart');
         Route::get('remove/{productId}', [OrderController::class, 'removeFromCart'])->name('remove');

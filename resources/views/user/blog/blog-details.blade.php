@@ -84,7 +84,9 @@
                                 <p>{{ \Carbon\Carbon::parse($post->created_at)->format('d/m/Y') }} | <a href="#">{{ $post->categoryPost->name }}</a></p>
                             </div>
                             <div class="entry-summary">
-                                <p>{!! $post->content !!}</p>
+                                <blockquote>
+                                    <p>{!! $post->content !!}</p>
+                                </blockquote>
 
                                 <div class="blog-share-link">
                                     <h6>Share :</h6>

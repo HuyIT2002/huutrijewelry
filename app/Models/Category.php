@@ -35,6 +35,6 @@ class Category extends Model
     }
     public function products()
     {
-        return $this->hasMany(Product::class, 'category_id'); // Trỏ đúng vào cột khóa ngoại
+        return $this->hasMany(Product::class, 'category_id', 'category_id'); // Mỗi danh mục có nhiều sản phẩm
     }
 }

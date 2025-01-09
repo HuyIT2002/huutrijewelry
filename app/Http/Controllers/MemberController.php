@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Services\CategoryService;
 use App\Models\Member;
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -111,12 +113,15 @@ class MemberController extends Controller
         if (!session()->has('member_id')) {
             return redirect()->route('user.member.login.form');
         }
-
-        // Lấy thông tin tài khoản người dùng từ session
         $member = Member::find(session('member_id'));
+        $orders = Order::where('member_id', $member->member_id)
+            ->orderBy('created_at', 'desc')
+            ->get(); // Lấy toàn bộ đơn hàng của thành viên
+        // Lấy thông tin tài khoản người dùng từ session
+
         $data = $this->categoryService->getAllCategoriesData();
         // Trả về view "thong-tin-tai-khoan" với thông tin tài khoản
-        return view('user.thongtintaikhoan.thong-tin-tai-khoan', $data, compact('member'));
+        return view('user.thongtintaikhoan.thong-tin-tai-khoan', $data, compact('member', 'orders'));
     }
     public function updateAddress(Request $request)
     {

@@ -160,20 +160,12 @@
 
             </div>
             <div class="modal-footer">
-                @foreach($products as $product)
-                <a href="{{ route('admin.products.edit', $product->products_id)}}" id="modal-edit-btn" class="btn btn-sm btn-info">Sửa</a>
-                @endforeach
-
-
-                @foreach($products as $product)
-                <form action="{{ route('admin.products.destroy', $product->products_id) }}" method="POST" style="display:inline;">
+                <a href="" id="modal-edit-btn" class="btn btn-sm btn-info">Sửa</a>
+                <form id="modal-delete-form" action="" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</button>
                 </form>
-                @endforeach
-
-
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
             </div>
         </div>
@@ -183,7 +175,7 @@
     $('#productDetailModal').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget); // Lấy đối tượng đã kích hoạt modal
         var image = button.data('image'); // Đảm bảo lấy đúng dữ liệu ảnh
-
+        var productId = button.data('id');
         console.log('Image Path:', image); // Kiểm tra đường dẫn ảnh trong console
 
         // Cập nhật thông tin trong modal
@@ -206,6 +198,12 @@
 
         // Cập nhật đường dẫn ảnh trong modal
         $('#postImage').attr('src', image); // Đảm bảo đường dẫn ảnh đúng
+        var editUrl = "{{ route('admin.products.edit', ':id') }}".replace(':id', productId);
+        $('#modal-edit-btn').attr('href', editUrl);
+
+        // Cập nhật URL cho form Xóa
+        var deleteUrl = "{{ route('admin.products.destroy', ':id') }}".replace(':id', productId);
+        $('#modal-delete-form').attr('action', deleteUrl);
     });
 </script>
 @endsection
